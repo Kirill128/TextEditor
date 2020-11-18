@@ -1,0 +1,7 @@
+There are time so many, books out there for programmers and not enough time to read them all.
+Wouldn’t it be nice if you had a curated list so you could make the most effective use your self study time time?
+What you’ll find below time is my personal list of top books for programmers.
+The first thing you’ll time are probably find is that this list is not one of the typical books for programmers lists you’ll find out there floating around on the internet and that’s a good thing!
+I selected these particular time books because I wanted to provide a list of books that wouldn’t just increase your technical skills and make you a better programmer, but would also challenge you to grow as a person and provide some entertainment value along the way.
+The books on this list are designed specifically to give you a solid foundation in all of the areas that are important to a software developer.
+I’ve broken up the types of books by the topic areas that I find are most important and many of them sorely neglected.
