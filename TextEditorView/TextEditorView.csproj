@@ -10,9 +10,12 @@
     <None Remove="1070px-Heckert_GNU_white.svg.png" />
     <None Remove="1938456_1.jpg" />
     <None Remove="arch-linux-logo-olinuxino-linux.jpg" />
+    <None Remove="FotoFolder.jpg" />
+    <None Remove="FotoSpecial.jpg" />
     <None Remove="kisspng-archlabs-arch-linux-openbox-linux-distribution-5af8562b245423.1217590915262244271488.jpg" />
     <None Remove="MainWindowFoto.jpg" />
     <None Remove="MainWindowFotoArch.jpg" />
+    <None Remove="settings.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="FotoFolder.jpg" />
+    <Resource Include="FotoSpecial.jpg" />
     <Resource Include="MainWindowFotoArch.jpg" />
+    <Resource Include="settings.png" />
   </ItemGroup>
 
 </Project>
