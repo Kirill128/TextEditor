@@ -111,7 +111,29 @@ namespace TextEditorView
                       </StackPanel>
          */
         public static StackPanel MakePanelButtonsSettings() {
-            return new StackPanel();
+            Button theme = new Button();
+            theme.Content = "Theme";
+            theme.Background = new SolidColorBrush(Colors.Transparent);
+            theme.Foreground = new SolidColorBrush(Colors.Black);
+
+            Button scale = new Button();
+            scale.Content = "Scale";
+            scale.Background = new SolidColorBrush(Colors.Transparent);
+            scale.Foreground = new SolidColorBrush(Colors.Black);
+
+            Button sprawka = new Button();
+            sprawka.Content = "About";
+            sprawka.Background = new SolidColorBrush(Colors.Transparent);
+            sprawka.Foreground = new SolidColorBrush(Colors.Black);
+
+            StackPanel panel = new StackPanel();
+            panel.Visibility = Visibility.Collapsed;
+            Grid.SetColumn(panel, 1);
+            panel.Children.Add(theme);
+            panel.Children.Add(scale);
+            panel.Children.Add(sprawka);
+
+            return  panel;
         }
         #endregion
         
@@ -233,6 +255,9 @@ namespace TextEditorView
                 foreach (ToggleButton t in LeftPanelButtons)
                 {
                     t.IsChecked = false;
+                }
+                foreach (StackPanel s in AllLeftPanels) {
+                    s.Visibility = Visibility.Collapsed;
                 }
                 LeftPanelButtons[numOfLeftButton].IsChecked = true;
                 AllLeftPanels[numOfLeftPanel].Visibility = Visibility.Visible;
