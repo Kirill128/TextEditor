@@ -1,5 +1,4 @@
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView.csprojAssemblyReference.cache
-I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\MainWindow.g.cs
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\App.g.cs
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView_MarkupCompile.cache
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView_MarkupCompile.lref
@@ -12,7 +11,6 @@ I:\TextEditor\TextEditorView\bin\Debug\netcoreapp3.1\TextEditorView.pdb
 I:\TextEditor\TextEditorView\bin\Debug\netcoreapp3.1\MaterialDesignColors.dll
 I:\TextEditor\TextEditorView\bin\Debug\netcoreapp3.1\MaterialDesignThemes.Wpf.dll
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\App.baml
-I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\MainWindow.baml
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView.g.resources
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView.AssemblyInfoInputs.cache
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView.AssemblyInfo.cs
@@ -21,3 +19,5 @@ I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView.csproj.CopyC
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView.dll
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView.pdb
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView.genruntimeconfig.cache
+I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\MainWindow.g.cs
+I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\MainWindow.baml

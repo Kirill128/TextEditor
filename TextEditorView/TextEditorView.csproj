@@ -16,6 +16,10 @@
     <None Remove="MainWindowFoto.jpg" />
     <None Remove="MainWindowFotoArch.jpg" />
     <None Remove="settings.png" />
+    <None Remove="View\FotoFolder.jpg" />
+    <None Remove="View\FotoSpecial.jpg" />
+    <None Remove="View\MainWindowFoto.jpg" />
+    <None Remove="View\settings.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,10 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="FotoFolder.jpg" />
-    <Resource Include="FotoSpecial.jpg" />
-    <Resource Include="MainWindowFotoArch.jpg" />
-    <Resource Include="settings.png" />
+    <Resource Include="View\FotoFolder.jpg" />
+    <Resource Include="View\FotoSpecial.jpg" />
+    <Resource Include="View\MainWindowFoto.jpg" />
+    <Resource Include="View\settings.png" />
   </ItemGroup>
 
 </Project>

@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace TextEditorView
 {
@@ -23,23 +25,46 @@ namespace TextEditorView
     /// </summary>
     public partial class MainWindow : Window
     {
-        LinkedList<ToggleButton> LeftPanelButtons;
-        LinkedList<StackPanel> AllLeftPanels;
-        StackPanel Current_Left_Work_Panel;
+        private const int lengthOfLeftPanelButtons=2;
+        private ToggleButton[] LeftPanelButtons;// left button with icons 
+        /*
+         * 0 - Button Folder
+         * 1 - Button Settings
+        */
+        private const int lengthOfTopPanelButtons = 1;
+        private ToggleButton[] TopPanelButtons;
+        /*
+          0- Button Special
+        */
+
+        private const int lengthOfLeftPanelStack = 2;
+        private StackPanel[] AllLeftPanels; //left  panels for left buttons with icons
+        /*
+         * 0 - Panel for Button Folder
+         * 1 - Panel for Button Settings
+         */
+
+        private const int lengthOfTopPanelGrid = 1;
+        private Grid[] AllTopPanels; // top panels for left buttons with icons
+        /*
+         * 0 - Panle for Button Special
+        */
+
         public MainWindow()
         {
             InitializeComponent();
-             
-            LeftPanelButtons = new LinkedList<ToggleButton>();
-            LeftPanelButtons.AddLast(Button_Folder);
-            LeftPanelButtons.AddLast(Button_Settings);
+            LeftPanelButtons = new ToggleButton[lengthOfLeftPanelButtons] { Button_Folder, Button_Settings };
+            TopPanelButtons = new ToggleButton[lengthOfTopPanelButtons] { Button_Special };
 
-            AllLeftPanels.AddLast(MakePanelButtonsOpenFileSystem());
+            AllLeftPanels = new StackPanel[lengthOfLeftPanelStack] { MakePanelButtonsOpenFileSystem(), MakePanelButtonsSettings() };
+            AllTopPanels = new Grid[lengthOfTopPanelGrid] { MakeGridForTopOnButtonSpecial() };
+
+            foreach (StackPanel s in AllLeftPanels) {
+                LeftWorkPanel.Children.Add(s);
+            } 
         }
 
-
-
-
+        #region make left panels for left buttons
         public static StackPanel MakePanelButtonsOpenFileSystem() {
             Button New = new Button();
             New.Content ="New";
@@ -85,6 +110,18 @@ namespace TextEditorView
                           <Button Content="Save File As"  Command="ApplicationCommands.SaveAs" Background="#fadadada" Foreground="Black"/>
                       </StackPanel>
          */
+        public static StackPanel MakePanelButtonsSettings() {
+            return new StackPanel();
+        }
+        #endregion
+        
+        #region make top panel for left button special
+        public static Grid MakeGridForTopOnButtonSpecial() {
+            return new Grid();
+        }
+        #endregion
+
+        #region file work
         private void FileNew()
         {
             File_Path_Text.Text = "";
@@ -151,7 +188,9 @@ namespace TextEditorView
                 }
             }
         }
-        
+        #endregion
+
+        #region icon folder left panel buttons handler
         private void File_New_Command(object sender, ExecutedRoutedEventArgs e)
         {
             FileNew();
@@ -168,6 +207,8 @@ namespace TextEditorView
         private void Save_File_Command(object sender, ExecutedRoutedEventArgs e) {
             SaveFile();
         }
+        #endregion
+
         private void Shortcut_Key_Events(object sender, KeyEventArgs e)
         {
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Shift && e.Key == Key.S)
@@ -175,27 +216,41 @@ namespace TextEditorView
                 SaveFile();
             }
         }
+
+
+        #region left icons toggle buttons handlers
         private void Button_Folder_Click(object sender, RoutedEventArgs e) {
-            Left_Work_Panel.Visibility = (bool)((ToggleButton)sender).IsChecked ? Visibility.Visible : Visibility.Collapsed;
-
+            HideLeftButtonsAndShowOneLeftPanel(sender,0,0);
         }
-        
-        private void Button_Special_Click(object sender, RoutedEventArgs e)
-        {
-            TopSpecialGrid.Visibility=((bool)((ToggleButton)sender).IsChecked ? Visibility.Visible : Visibility.Collapsed);
-            
-        }
-
         private void Button_Settings_Click(object sender, RoutedEventArgs e)
         {
-
+            HideLeftButtonsAndShowOneLeftPanel(sender,1,1);
         }
-
-        private void Button_About_Click(object sender, RoutedEventArgs e)
+        private void HideLeftButtonsAndShowOneLeftPanel(object sender,int numOfLeftPanel,int numOfLeftButton) {
+            ToggleButton buttonFolder = (ToggleButton)sender;
+            if ((bool)buttonFolder.IsChecked)
+            {
+                foreach (ToggleButton t in LeftPanelButtons)
+                {
+                    t.IsChecked = false;
+                }
+                LeftPanelButtons[numOfLeftButton].IsChecked = true;
+                AllLeftPanels[numOfLeftPanel].Visibility = Visibility.Visible;
+            }
+            else
+            {
+                AllLeftPanels[numOfLeftPanel].Visibility = Visibility.Collapsed;
+            }
+        }
+        private void Button_Special_Click(object sender, RoutedEventArgs e)
         {
+            TopSpecialGrid.Visibility = ((bool)((ToggleButton)sender).IsChecked ? Visibility.Visible : Visibility.Collapsed);
+
 
         }
+
+        #endregion
     }
-   
-    
+
+
 }
