@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="TextEditorView.View.PanelSpecial"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TextEditorView.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Control.Resources>
+        <Style x:Key="OnOffToggleImageStyle" TargetType="ToggleButton" >
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="False">
+                    <Setter Property="BorderBrush" Value="#ffdadada" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Control.Resources>
+    <Grid Visibility="Visible" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <ComboBox Grid.Row="0" Grid.Column="0" Name="cmbFontFamily" Width="150" SelectionChanged="cmbFontFamily_SelectionChanged" />
+        <ComboBox Grid.Row="1" Grid.Column="0" Name="cmbFontSize" Width="150"  SelectionChanged="cmbFontSize_TextChanged"  />
+
+        <ToggleButton  Grid.Row="0" Grid.Column="1" Command="EditingCommands.ToggleBold" CommandTarget="{Binding ElementName=CurrentTextContainer}" Style="{StaticResource OnOffToggleImageStyle}" Name="btnBold" IsEnabled="True">
+            <Image Source="/View/text_bold.png" Width="16" Height="16" />
+        </ToggleButton>
+        <ToggleButton Grid.Row="0" Grid.Column="2" Command="EditingCommands.ToggleItalic" CommandTarget="{Binding ElementName=CurrentTextContainer}" Style="{StaticResource OnOffToggleImageStyle}" Name="btnItalic" IsEnabled="True" >
+            <Image Source="/View/text_italic.png" Width="16" Height="16" />
+        </ToggleButton>
+        <ToggleButton Grid.Row="1" Grid.Column="1" Command="EditingCommands.ToggleUnderline" CommandTarget="{Binding ElementName=CurrentTextContainer}" Style="{StaticResource OnOffToggleImageStyle}" Name="btnUnderline" IsEnabled="True" >
+            <Image Source="/View/text_underline.png" Width="16" Height="16" />
+        </ToggleButton>
+
+    </Grid>
+</UserControl>

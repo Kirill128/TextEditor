@@ -44,3 +44,6 @@ C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\T
 C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView.dll
 C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView.pdb
 C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\TextEditorView.genruntimeconfig.cache
+I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\PanelSpecial.g.cs
+I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\PanelSpecial.baml
+I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs

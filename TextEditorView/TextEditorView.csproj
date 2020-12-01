@@ -20,6 +20,9 @@
     <None Remove="View\FotoSpecial.jpg" />
     <None Remove="View\MainWindowFoto.jpg" />
     <None Remove="View\settings.png" />
+    <None Remove="View\text_bold.png" />
+    <None Remove="View\text_italic.png" />
+    <None Remove="View\text_underline.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +34,9 @@
     <Resource Include="View\FotoSpecial.jpg" />
     <Resource Include="View\MainWindowFoto.jpg" />
     <Resource Include="View\settings.png" />
+    <Resource Include="View\text_bold.png" />
+    <Resource Include="View\text_italic.png" />
+    <Resource Include="View\text_underline.png" />
   </ItemGroup>
 
 </Project>

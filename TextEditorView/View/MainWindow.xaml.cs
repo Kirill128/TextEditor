@@ -17,15 +17,16 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
-namespace TextEditorView
+namespace TextEditorView.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const int lengthOfLeftPanelButtons=2;
+        private const int lengthOfLeftPanelButtons = 2;
         private ToggleButton[] LeftPanelButtons;// left button with icons 
         /*
          * 0 - Button Folder
@@ -44,24 +45,34 @@ namespace TextEditorView
          * 1 - Panel for Button Settings
          */
 
-        private const int lengthOfTopPanelGrid = 1;
-        private Grid[] AllTopPanels; // top panels for left buttons with icons
-        /*
-         * 0 - Panle for Button Special
-        */
+        private PanelSpecial currentTopControl;
+        public PanelSpecial CurrentTopControl {
+            get { return currentTopControl; }
+            set { 
+                currentTopControl = value;
+                Grid.SetRow(value,0);
+               
+            } 
+        }
+         // top panels for left buttons with icons
+         // 0 - Panel for Button Special
+        
+
 
         public MainWindow()
         {
             InitializeComponent();
+
+            
             LeftPanelButtons = new ToggleButton[lengthOfLeftPanelButtons] { Button_Folder, Button_Settings };
             TopPanelButtons = new ToggleButton[lengthOfTopPanelButtons] { Button_Special };
 
             AllLeftPanels = new StackPanel[lengthOfLeftPanelStack] { MakePanelButtonsOpenFileSystem(), MakePanelButtonsSettings() };
-            AllTopPanels = new Grid[lengthOfTopPanelGrid] { MakeGridForTopOnButtonSpecial() };
 
             foreach (StackPanel s in AllLeftPanels) {
                 LeftWorkPanel.Children.Add(s);
-            } 
+            }
+
         }
 
         #region make left panels for left buttons
@@ -136,11 +147,72 @@ namespace TextEditorView
             return  panel;
         }
         #endregion
-        
-        #region make top panel for left button special
-        public static Grid MakeGridForTopOnButtonSpecial() {
-            return new Grid();
+
+        #region make top control for left button special
+
+        /*
+         <Grid x:Name="TopSpecialGrid" Grid.Row="0" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ComboBox Grid.Row="0" Grid.Column="0" Name="cmbFontFamily" Width="150" SelectionChanged="cmbFontFamily_SelectionChanged" />
+            <ComboBox Grid.Row="1" Grid.Column="0" Name="cmbFontSize" Width="150"  SelectionChanged="cmbFontSize_TextChanged"  />
+
+            <ToggleButton  Grid.Row="0" Grid.Column="1" Command="EditingCommands.ToggleBold" CommandTarget="{Binding ElementName=Text_Container}" Style="{StaticResource OnOffToggleImageStyle}" Name="btnBold" IsEnabled="True">
+                <Image Source="/View/text_bold.png" Width="16" Height="16" />
+            </ToggleButton>
+            <ToggleButton Grid.Row="0" Grid.Column="2" Command="EditingCommands.ToggleItalic" CommandTarget="{Binding ElementName=Text_Container}" Style="{StaticResource OnOffToggleImageStyle}" Name="btnItalic" IsEnabled="True" >
+                <Image Source="/View/text_italic.png" Width="16" Height="16" />
+            </ToggleButton>
+            <ToggleButton Grid.Row="1" Grid.Column="1" Command="EditingCommands.ToggleUnderline" CommandTarget="{Binding ElementName=Text_Container}" Style="{StaticResource OnOffToggleImageStyle}" Name="btnUnderline" IsEnabled="True" >
+                <Image Source="/View/text_underline.png" Width="16" Height="16" />
+            </ToggleButton>
+
+        </Grid>
+         
+        private void Text_Container_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            object temp = Text_Container.Selection.GetPropertyValue(Inline.FontWeightProperty);
+            btnBold.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontWeights.Bold));
+            temp = Text_Container.Selection.GetPropertyValue(Inline.FontStyleProperty);
+            btnItalic.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontStyles.Italic));
+            temp = Text_Container.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
+            btnUnderline.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(TextDecorations.Underline));
+
+            temp = Text_Container.Selection.GetPropertyValue(Inline.FontFamilyProperty);
+            cmbFontFamily.SelectedItem = temp;
+            temp = Text_Container.Selection.GetPropertyValue(Inline.FontSizeProperty);
+            cmbFontSize.SelectedItem = temp;
         }
+
+
+        private void cmbFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbFontFamily.SelectedItem != null)
+            { 
+                Text_Container.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, cmbFontFamily.SelectedItem);
+            }
+            Text_Container.Focus();
+        }
+
+        private void cmbFontSize_TextChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbFontSize.SelectedItem != null)
+            {
+                Text_Container.Selection.ApplyPropertyValue(Inline.FontSizeProperty, cmbFontSize.SelectedItem);
+            }
+            Text_Container.Focus();
+        }
+        */
+
+
         #endregion
 
         #region file work
@@ -269,9 +341,7 @@ namespace TextEditorView
         }
         private void Button_Special_Click(object sender, RoutedEventArgs e)
         {
-            TopSpecialGrid.Visibility = ((bool)((ToggleButton)sender).IsChecked ? Visibility.Visible : Visibility.Collapsed);
-
-
+            
         }
 
         #endregion
