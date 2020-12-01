@@ -35,7 +35,14 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="TopSpecialGrid" Grid.Row="0" Visibility="Collapsed">
+        <Grid x:Name="TopSpecialGrid" Grid.Row="0" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            
             
         </Grid>
 
