@@ -23,8 +23,11 @@ namespace TextEditorView.View
         public RichTextBox CurrentTextContainer {
             get { return currentTextContainer; }
             set {
-                currentTextContainer = value;
-                
+                currentTextContainer = value;/*
+                btnBold.CommandTarget = currentTextContainer;
+                btnItalic.CommandTarget = currentTextContainer;
+                btnUnderline.CommandTarget = currentTextContainer;*/
+
             }
                 
         }

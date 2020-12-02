@@ -33,13 +33,13 @@
         <ComboBox Grid.Row="0" Grid.Column="0" Name="cmbFontFamily" Width="150" SelectionChanged="cmbFontFamily_SelectionChanged" />
         <ComboBox Grid.Row="1" Grid.Column="0" Name="cmbFontSize" Width="150"  SelectionChanged="cmbFontSize_TextChanged"  />
 
-        <ToggleButton  Grid.Row="0" Grid.Column="1" Command="EditingCommands.ToggleBold" CommandTarget="{Binding ElementName= }" Style="{StaticResource OnOffToggleImageStyle}" Name="btnBold" IsEnabled="True" >
+        <ToggleButton  Grid.Row="0" Grid.Column="1" Command="EditingCommands.ToggleBold"  Style="{StaticResource OnOffToggleImageStyle}" Name="btnBold" IsEnabled="True" >
             <Image Source="/View/text_bold.png" Width="16" Height="16" />
         </ToggleButton>
-        <ToggleButton Grid.Row="0" Grid.Column="2" Command="EditingCommands.ToggleItalic" CommandTarget="{Binding ElementName=CurrentTextContainer}" Style="{StaticResource OnOffToggleImageStyle}" Name="btnItalic" IsEnabled="True" >
+        <ToggleButton Grid.Row="0" Grid.Column="2" Command="EditingCommands.ToggleItalic"  Style="{StaticResource OnOffToggleImageStyle}" Name="btnItalic" IsEnabled="True" >
             <Image Source="/View/text_italic.png" Width="16" Height="16" />
         </ToggleButton>
-        <ToggleButton Grid.Row="1" Grid.Column="1" Command="EditingCommands.ToggleUnderline" CommandTarget="{Binding ElementName=CurrentTextContainer}" Style="{StaticResource OnOffToggleImageStyle}" Name="btnUnderline" IsEnabled="True" >
+        <ToggleButton Grid.Row="1" Grid.Column="1" Command="EditingCommands.ToggleUnderline" Style="{StaticResource OnOffToggleImageStyle}" Name="btnUnderline" IsEnabled="True" >
             <Image Source="/View/text_underline.png" Width="16" Height="16" />
         </ToggleButton>
 
