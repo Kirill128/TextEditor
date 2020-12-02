@@ -19,22 +19,28 @@ namespace TextEditorView.View
     /// </summary>
     public partial class PanelSpecial : UserControl
     {
-        public RichTextBox CurrentTextContainer { get; set; }
-        public PanelSpecial()
+        private RichTextBox currentTextContainer;
+        public RichTextBox CurrentTextContainer {
+            get { return currentTextContainer; }
+            set {
+                currentTextContainer = value;
+                
+            }
+                
+        }
+        public PanelSpecial(RichTextBox rtb)
         {
             InitializeComponent();
 
-            
-           CurrentTextContainer.SelectionChanged += CurrentTextContainer_SelectionChanged;
+            CurrentTextContainer = rtb;
 
-
-            DataContext = CurrentTextContainer;
+            CurrentTextContainer.SelectionChanged += CurrentTextContainer_SelectionChanged;
 
             cmbFontFamily.ItemsSource = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
             List<double> l = new List<double>();
             for (int i = 122; i > 0; i--) l.Add(i);
             cmbFontSize.ItemsSource = l;
-
+            
         }
 
         private void CurrentTextContainer_SelectionChanged(object sender, RoutedEventArgs e)

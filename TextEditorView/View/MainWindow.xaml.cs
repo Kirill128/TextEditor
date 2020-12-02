@@ -45,17 +45,19 @@ namespace TextEditorView.View
          * 1 - Panel for Button Settings
          */
 
+
         private PanelSpecial currentTopControl;
         public PanelSpecial CurrentTopControl {
             get { return currentTopControl; }
             set { 
                 currentTopControl = value;
+                currentTopControl.Visibility = Visibility.Collapsed;
                 Grid.SetRow(value,0);
-               
+                MainGrid.Children.Add(currentTopControl);
             } 
         }
          // top panels for left buttons with icons
-         // 0 - Panel for Button Special
+         //  Panel for Button Special
         
 
 
@@ -63,6 +65,7 @@ namespace TextEditorView.View
         {
             InitializeComponent();
 
+            CurrentTopControl = new PanelSpecial(Text_Container);
             
             LeftPanelButtons = new ToggleButton[lengthOfLeftPanelButtons] { Button_Folder, Button_Settings };
             TopPanelButtons = new ToggleButton[lengthOfTopPanelButtons] { Button_Special };
@@ -341,7 +344,7 @@ namespace TextEditorView.View
         }
         private void Button_Special_Click(object sender, RoutedEventArgs e)
         {
-            
+            CurrentTopControl.Visibility = (Button_Special.IsChecked == true) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         #endregion
