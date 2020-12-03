@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="TextEditorView.View.ButtonForFlowDoc"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TextEditorView.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="110">
+
+    <Border Background="White"  CornerRadius="20" HorizontalAlignment="Left" Width="Auto" >
+        <StackPanel Orientation="Horizontal">
+            <Button BorderBrush="Transparent" Background="Transparent"  Foreground="Black" Content="File" Width="Auto"/>
+            <Button BorderBrush="Transparent" Background="Transparent" >
+                <Image Source="/View/cross.png" Height="10" Width="10" />
+            </Button>
+        </StackPanel>
+    </Border>
+
+</UserControl>

@@ -42,22 +42,36 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
-            <Border Grid.Row="1" Grid.Column="1" Margin="7" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="20" >
+
+            <Grid Grid.Row="1" Grid.Column="1" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" x:Name="ButtonsChangeFlowDoc">
+                    
+                </StackPanel>
+                
+                <Border Grid.Row="1" Margin="7" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="20" >
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="50" Color="LightGray" ShadowDepth="0"/>
                 </Border.Effect>
 
-                <Grid KeyDown="Shortcut_Key_Events">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <RichTextBox  x:Name="Text_Container" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="15 15 15 0" VerticalScrollBarVisibility="Auto" />
-                    <TextBlock x:Name="File_Path_Text"  Grid.Row="1" HorizontalAlignment="Right" Margin="0 0 15 0" />
-                </Grid>
+                    <Grid KeyDown="Shortcut_Key_Events">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <RichTextBox  x:Name="Text_Container" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="15 15 15 0" VerticalScrollBarVisibility="Auto"  />
+                        <TextBlock x:Name="File_Path_Text"  Grid.Row="1" HorizontalAlignment="Right" Margin="0 0 15 0" />
+                    </Grid>
 
-            </Border>
+                </Border>
+                
+                
+                
+            </Grid>
 
             <Grid x:Name="LeftWorkPanel" Grid.Column="0" >
                 <Grid.ColumnDefinitions>

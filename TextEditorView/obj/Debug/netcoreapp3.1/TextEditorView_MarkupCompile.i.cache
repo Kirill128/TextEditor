@@ -1,5 +1,5 @@
 ﻿TextEditorView
-
+1.0.0.0
 
 winexe
 C#
@@ -12,7 +12,7 @@ TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
 I:\TextEditor\TextEditorView\App.xaml
 31524753165
 
-9-50212254
+1117144114
 1941319279606
 View\ButtonForFlowDoc.xaml;View\MainWindow.xaml;View\PanelSpecial.xaml;
 

@@ -18,6 +18,8 @@ using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using TextEditorView.Model;
+using TextEditorView.ViewModel;
 
 namespace TextEditorView.View
 {
@@ -26,6 +28,9 @@ namespace TextEditorView.View
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        //////////////////////////////////// Inizialisation Data //////////////////////////////////////////////////////////// 
+        #region
         private const int lengthOfLeftPanelButtons = 2;
         private ToggleButton[] LeftPanelButtons;// left button with icons 
         /*
@@ -49,16 +54,19 @@ namespace TextEditorView.View
         private PanelSpecial currentTopControl;
         public PanelSpecial CurrentTopControl {
             get { return currentTopControl; }
-            set { 
+            set {
                 currentTopControl = value;
                 currentTopControl.Visibility = Visibility.Collapsed;
-                Grid.SetRow(value,0);
+                Grid.SetRow(value, 0);
                 MainGrid.Children.Add(currentTopControl);
-            } 
+            }
         }
-         // top panels for left buttons with icons
-         //  Panel for Button Special
-        
+        // top panels for left buttons with icons
+        //  Panel for Button Special
+        #endregion
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public FlowDocumentsViewModel DocumentsViewModel {get;set;}
+
 
 
         public MainWindow()
@@ -76,6 +84,11 @@ namespace TextEditorView.View
                 LeftWorkPanel.Children.Add(s);
             }
 
+            DocumentsViewModel = new FlowDocumentsViewModel();
+            DocumentsViewModel.PropertyChanged += Current_Doc_Changed;
+
+            this.DataContext = DocumentsViewModel;
+            
         }
 
         #region make left panels for left buttons
@@ -151,166 +164,42 @@ namespace TextEditorView.View
         }
         #endregion
 
-        #region make top control for left button special
-
-        /*
-         <Grid x:Name="TopSpecialGrid" Grid.Row="0" Visibility="Visible">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-
-            <ComboBox Grid.Row="0" Grid.Column="0" Name="cmbFontFamily" Width="150" SelectionChanged="cmbFontFamily_SelectionChanged" />
-            <ComboBox Grid.Row="1" Grid.Column="0" Name="cmbFontSize" Width="150"  SelectionChanged="cmbFontSize_TextChanged"  />
-
-            <ToggleButton  Grid.Row="0" Grid.Column="1" Command="EditingCommands.ToggleBold" CommandTarget="{Binding ElementName=Text_Container}" Style="{StaticResource OnOffToggleImageStyle}" Name="btnBold" IsEnabled="True">
-                <Image Source="/View/text_bold.png" Width="16" Height="16" />
-            </ToggleButton>
-            <ToggleButton Grid.Row="0" Grid.Column="2" Command="EditingCommands.ToggleItalic" CommandTarget="{Binding ElementName=Text_Container}" Style="{StaticResource OnOffToggleImageStyle}" Name="btnItalic" IsEnabled="True" >
-                <Image Source="/View/text_italic.png" Width="16" Height="16" />
-            </ToggleButton>
-            <ToggleButton Grid.Row="1" Grid.Column="1" Command="EditingCommands.ToggleUnderline" CommandTarget="{Binding ElementName=Text_Container}" Style="{StaticResource OnOffToggleImageStyle}" Name="btnUnderline" IsEnabled="True" >
-                <Image Source="/View/text_underline.png" Width="16" Height="16" />
-            </ToggleButton>
-
-        </Grid>
-         
-        private void Text_Container_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            object temp = Text_Container.Selection.GetPropertyValue(Inline.FontWeightProperty);
-            btnBold.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontWeights.Bold));
-            temp = Text_Container.Selection.GetPropertyValue(Inline.FontStyleProperty);
-            btnItalic.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(FontStyles.Italic));
-            temp = Text_Container.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
-            btnUnderline.IsChecked = (temp != DependencyProperty.UnsetValue) && (temp.Equals(TextDecorations.Underline));
-
-            temp = Text_Container.Selection.GetPropertyValue(Inline.FontFamilyProperty);
-            cmbFontFamily.SelectedItem = temp;
-            temp = Text_Container.Selection.GetPropertyValue(Inline.FontSizeProperty);
-            cmbFontSize.SelectedItem = temp;
-        }
-
-
-        private void cmbFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cmbFontFamily.SelectedItem != null)
-            { 
-                Text_Container.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, cmbFontFamily.SelectedItem);
-            }
-            Text_Container.Focus();
-        }
-
-        private void cmbFontSize_TextChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cmbFontSize.SelectedItem != null)
-            {
-                Text_Container.Selection.ApplyPropertyValue(Inline.FontSizeProperty, cmbFontSize.SelectedItem);
-            }
-            Text_Container.Focus();
-        }
-        */
-
-
-        #endregion
-
-        #region file work
-        private void FileNew()
-        {
-            File_Path_Text.Text = "";
-            TextRange doc = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
+        public static void FileClear(RichTextBox richtext) {
+            TextRange doc = new TextRange(richtext.Document.ContentStart, richtext.Document.ContentEnd);
             doc.Text = "";
         }
-        private void FileOpen()
-        {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Text Files (*.txt)|*.txt|RichText Files (*.rtf)|*.rtf|XAML Files (*.xaml)|*.xaml|All files (*.*)|*.*";
-            if (dlg.ShowDialog() == true)
-            {
-                TextRange doc = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
-                File_Path_Text.Text = dlg.FileName;
-                using (FileStream fs = new FileStream(dlg.FileName, FileMode.Open))
-                {
-                    if (System.IO.Path.GetExtension(dlg.FileName).ToLower() == ".rtf")
-                        doc.Load(fs, DataFormats.Rtf);
-                    else if (System.IO.Path.GetExtension(dlg.FileName).ToLower() == ".txt")
-                        doc.Load(fs, DataFormats.Text);
-                    else
-                        doc.Load(fs, DataFormats.Xaml);
 
-                }
-            }
-        }
-
-        private void SaveFile()
-        {
-            if (File_Path_Text.Text == "")
-            {
-                SaveFileAs();
-            }
-            else
-            {
-                TextRange doc = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
-                using (FileStream fs = new FileStream(File_Path_Text.Text, FileMode.Create))
-                {
-                    if (System.IO.Path.GetExtension(File_Path_Text.Text).ToLower() == ".rtf")
-                        doc.Save(fs, DataFormats.Rtf);
-                    else if (System.IO.Path.GetExtension(File_Path_Text.Text).ToLower() == ".txt")
-                        doc.Save(fs, DataFormats.Text);
-                    else
-                        doc.Save(fs, DataFormats.Xaml);
-                }
-            }
-        }
-
-        private void SaveFileAs()
-        {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "Text Files (*.txt)|*.txt|RichText Files (*.rtf)|*.rtf|XAML Files (*.xaml)|*.xaml|All files (*.*)|*.*";
-            if (sfd.ShowDialog() == true)
-            {
-                TextRange doc = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
-                using (FileStream fs = new FileStream(sfd.FileName, FileMode.Create))
-                {
-                    if (System.IO.Path.GetExtension(sfd.FileName).ToLower() == ".rtf")
-                        doc.Save(fs, DataFormats.Rtf);
-                    else if (System.IO.Path.GetExtension(sfd.FileName).ToLower() == ".txt")
-                        doc.Save(fs, DataFormats.Text);
-                    else
-                        doc.Save(fs, DataFormats.Xaml);
-                }
-            }
-        }
-        #endregion
-
+        // ///////////////////////////////////////// Handlers //////////////////////////////////////////////////////////
         #region icon folder left panel buttons handler
+
+        private void Current_Doc_Changed(object sender ,PropertyChangedEventArgs e) {
+            Text_Container.Document = DocumentsViewModel.SelectedDocumentBox.Document;
+            File_Path_Text.Text = DocumentsViewModel.SelectedDocumentBox.DocumentPathInFileSystem;
+        }
         private void File_New_Command(object sender, ExecutedRoutedEventArgs e)
         {
-            FileNew();
+             DocumentsViewModel.FileNewInCollectionAndWindow();
         }
-        private void File_Open_Command(object sender, ExecutedRoutedEventArgs e)
+        private void File_Open_Command(object sender, ExecutedRoutedEventArgs e) // open in selected Rich Text Box Flow Doc
         {
-            FileOpen();
+            DocumentsViewModel.FileOpenInCollectionAndWindow();
         }
         private void Save_File_As_Command(object sender, ExecutedRoutedEventArgs e)
         {
-            SaveFileAs();
+            DocumentsViewModel.FileSaveAsCollectionAndWindow();
         }
 
         private void Save_File_Command(object sender, ExecutedRoutedEventArgs e) {
-            SaveFile();
+            FileSystemDialogMethods.SaveFile(File_Path_Text.Text,Text_Container);
         }
         #endregion
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void Shortcut_Key_Events(object sender, KeyEventArgs e)
         {
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Shift && e.Key == Key.S)
             {
-                SaveFile();
+                FileSystemDialogMethods.SaveFile(File_Path_Text.Text,Text_Container);
             }
         }
 
