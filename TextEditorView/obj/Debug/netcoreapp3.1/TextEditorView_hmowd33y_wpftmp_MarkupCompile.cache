@@ -1,20 +1,20 @@
-﻿TextEditorView
+﻿TextEditorView_hmowd33y_wpftmp
 
 
 winexe
 C#
 .cs
 C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\
-TextEditorView
+TextEditorView_hmowd33y_wpftmp
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 C:\Users\Laptop\source\repos\TextEditor\TextEditorView\App.xaml
 31524753165
 
-9-50212254
-1941205226817
+13-1322463189
+388-1884513662
 View\ButtonForFlowDoc.xaml;View\MainWindow.xaml;View\PanelSpecial.xaml;
 
-False
+True
 

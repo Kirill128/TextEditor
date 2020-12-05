@@ -20,6 +20,8 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using TextEditorView.Model;
 using TextEditorView.ViewModel;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace TextEditorView.View
 {
@@ -65,16 +67,16 @@ namespace TextEditorView.View
         //  Panel for Button Special
         #endregion
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public FlowDocumentsViewModel DocumentsViewModel {get;set;}
+        public FlowDocumentsViewModel DocumentsViewModel { get; set; }
 
-
+        public ObservableCollection<ButtonForFlowDoc> ButtonsFlowDocs { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
             CurrentTopControl = new PanelSpecial(Text_Container);
-            
+
             LeftPanelButtons = new ToggleButton[lengthOfLeftPanelButtons] { Button_Folder, Button_Settings };
             TopPanelButtons = new ToggleButton[lengthOfTopPanelButtons] { Button_Special };
 
@@ -86,17 +88,23 @@ namespace TextEditorView.View
 
             DocumentsViewModel = new FlowDocumentsViewModel();
             DocumentsViewModel.PropertyChanged += Current_Doc_Changed;
+            DocumentsViewModel.FlowDocumentsBoxes.CollectionChanged += Changes_Flow_Docs;
+
+            ButtonsFlowDocs = new ObservableCollection<ButtonForFlowDoc>();
+            ButtonsChangeFlowDoc.ItemsSource = ButtonsFlowDocs;
 
             this.DataContext = DocumentsViewModel;
-            
+
+            File_New_Command(null,null);
         }
 
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         #region make left panels for left buttons
         public static StackPanel MakePanelButtonsOpenFileSystem() {
             Button New = new Button();
-            New.Content ="New";
+            New.Content = "New";
             New.Command = ApplicationCommands.New;
-            New.Background = new SolidColorBrush(Color.FromArgb(0xFA,0xDA,0xDA,0xDA));
+            New.Background = new SolidColorBrush(Color.FromArgb(0xFA, 0xDA, 0xDA, 0xDA));
             New.Foreground = new SolidColorBrush(Colors.Black);
 
             Button Open_File = new Button();
@@ -120,14 +128,14 @@ namespace TextEditorView.View
 
             StackPanel panel = new StackPanel();
             panel.Visibility = Visibility.Collapsed;
-            Grid.SetColumn(panel,1);
+            Grid.SetColumn(panel, 1);
             panel.Children.Add(New);
             panel.Children.Add(Open_File);
             panel.Children.Add(Save_File);
             panel.Children.Add(Save_File_As);
 
             return panel;
-            
+
         }
         /*
                      <StackPanel x:Name="Button_Folder_Content_Panel" Grid.Column="1" Visibility="Collapsed">
@@ -160,22 +168,53 @@ namespace TextEditorView.View
             panel.Children.Add(scale);
             panel.Children.Add(sprawka);
 
-            return  panel;
+            return panel;
         }
         #endregion
-
+        // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void FileClear(RichTextBox richtext) {
             TextRange doc = new TextRange(richtext.Document.ContentStart, richtext.Document.ContentEnd);
             doc.Text = "";
         }
 
-        // ///////////////////////////////////////// Handlers //////////////////////////////////////////////////////////
-        #region icon folder left panel buttons handler
+        #region doc select change handler
+        private void Changes_Flow_Docs(object sender, NotifyCollectionChangedEventArgs e) {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    ButtonForFlowDoc but = new ButtonForFlowDoc(e.NewItems[0] as FlowDocumentBox);
+                    ButtonsFlowDocs.Add(but);
+                    but.ButtonFileSelectClick +=Button_Doc_SelectChange_EventHandler;
+                    but.ButtonFileCloseClick +=Button_Doc_Close_EventHandler;
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (ButtonForFlowDoc d in ButtonsFlowDocs) if ((e.OldItems[0] as FlowDocumentBox).Equals(d.FlowDocBox)) {
+                            ButtonsFlowDocs.Remove(d);
 
-        private void Current_Doc_Changed(object sender ,PropertyChangedEventArgs e) {
-            Text_Container.Document = DocumentsViewModel.SelectedDocumentBox.Document;
-            File_Path_Text.Text = DocumentsViewModel.SelectedDocumentBox.DocumentPathInFileSystem;
+                            break;
+                    }
+                    break;
+            } 
         }
+        private void Current_Doc_Changed(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName) {
+                case "SelectedDocuments":
+                    Text_Container.Document = DocumentsViewModel.SelectedDocumentBox.Document;
+                    File_Path_Text.Text = DocumentsViewModel.SelectedDocumentBox.DocumentPathInFileSystem;
+                    break;
+                case "FlowDocuments":
+                    //Just make all buttons in listbox according to FlowDocs observablecollection and input
+
+                    break;
+
+            } 
+        
+        }
+        #endregion
+        // ///////////////////////////////////////// Handlers //////////////////////////////////////////////////////////
+        #region icon folder (work with file system) left panel buttons handler
+
         private void File_New_Command(object sender, ExecutedRoutedEventArgs e)
         {
              DocumentsViewModel.FileNewInCollectionAndWindow();
@@ -195,6 +234,18 @@ namespace TextEditorView.View
         #endregion
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        private void Button_Doc_SelectChange_EventHandler(object sender) {
+            DocumentsViewModel.SelectedDocumentBox = (sender as ButtonForFlowDoc).FlowDocBox;
+        }
+        private void Button_Doc_Close_EventHandler(object sender)
+        {
+
+            DocumentsViewModel.FlowDocumentsBoxes.Remove((sender as ButtonForFlowDoc).FlowDocBox);
+            if (DocumentsViewModel.FlowDocumentsBoxes.Count > 0)
+                DocumentsViewModel.SelectedDocumentBox = DocumentsViewModel.FlowDocumentsBoxes[0];
+            else
+                File_New_Command(null, null);   
+        }
         private void Shortcut_Key_Events(object sender, KeyEventArgs e)
         {
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Shift && e.Key == Key.S)

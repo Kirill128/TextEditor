@@ -30,29 +30,46 @@ namespace TextEditorView.ViewModel
         }
 
         public FlowDocumentsViewModel() {
-            FlowDocumentsBoxes = new ObservableCollection<FlowDocumentBox>() { new FlowDocumentBox( new FlowDocument(), String.Empty) };
-
+            FlowDocumentsBoxes = new ObservableCollection<FlowDocumentBox>() {};
         }
 
-        #region
+        #region selected file new, open, save, save as actions
         public void FileNewInCollectionAndWindow() {
-            FlowDocumentBox newDoc = new FlowDocumentBox(new FlowDocument(),String.Empty);
+            FlowDocumentBox newDoc = new FlowDocumentBox(new FlowDocument(), "C:\\Users\\Laptop\\NewFile.rtf");
             FlowDocumentsBoxes.Add(newDoc);
             SelectedDocumentBox = newDoc;
         }
         public void FileOpenInCollectionAndWindow() {
             FlowDocumentBox doc = FileSystemDialogMethods.FileOpenFlowDoc();
-            FlowDocumentsBoxes.Add(doc);
-            SelectedDocumentBox = doc;
+            if (!doc.DocumentPathInFileSystem.Equals(String.Empty)) {
+                FlowDocumentBox inCollectionExist =null;
+                foreach (FlowDocumentBox box in FlowDocumentsBoxes) {
+                    if (box.DocumentPathInFileSystem.Equals(doc.DocumentPathInFileSystem))
+                    {
+                        inCollectionExist = box;
+                        break;
+                    } 
+                }
+                if (inCollectionExist==null) {
+                    FlowDocumentsBoxes.Add(doc);
+                    SelectedDocumentBox = doc;
+                }
+                else {
+                    SelectedDocumentBox = inCollectionExist;
+                }
+
+            }
         }
         public void FileSaveInCollectionAndWindow() {
             FlowDocumentBox doc = FileSystemDialogMethods.SaveFileFlowDoc(SelectedDocumentBox);
-            SelectedDocumentBox = doc;
+            if (!doc.DocumentPathInFileSystem.Equals(String.Empty))
+                SelectedDocumentBox = doc;
         }
         public void FileSaveAsCollectionAndWindow()
         {
             FlowDocumentBox doc = FileSystemDialogMethods.SaveFileAsFlowDoc(SelectedDocumentBox.Document);
-            SelectedDocumentBox = doc;
+            if (!doc.DocumentPathInFileSystem.Equals(String.Empty))
+                SelectedDocumentBox = doc;
         }
         #endregion
 

@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TextEditorView.Model;
 
 namespace TextEditorView.View
 {
@@ -18,11 +10,33 @@ namespace TextEditorView.View
     /// </summary>
     public partial class ButtonForFlowDoc : UserControl
     {
-        public FlowDocument FlowDoc { get; set; }
-        public ButtonForFlowDoc(FlowDocument doc)
+
+        public delegate void RoutedEvent (object sender );
+
+        public event RoutedEvent ButtonFileSelectClick;
+
+        public event RoutedEvent ButtonFileCloseClick;
+        public FlowDocumentBox FlowDocBox { get; set; }
+        public ButtonForFlowDoc(FlowDocumentBox doc)
         {
             InitializeComponent();
+            FlowDocBox = doc;
+
+            string[] name = doc.DocumentPathInFileSystem.Split(new char[] { '\\' });
+            ButtonFileName.Content = name[name.Length-1];
+
+            FlowDocBox.ButtonToManipulateDoc = this;
         }
 
+        private void ButtonFileName_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonFileSelectClick?.Invoke(this);
+        }
+
+        private void ButtonClose_Click(object sender,RoutedEventArgs e)
+        {
+            ButtonFileCloseClick?.Invoke(this);
+        }
+       
     }
 }

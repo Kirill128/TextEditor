@@ -49,9 +49,18 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Orientation="Horizontal" x:Name="ButtonsChangeFlowDoc">
-                    
-                </StackPanel>
+                <ListBox Grid.Row="0"  x:Name="ButtonsChangeFlowDoc" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="0"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
                 
                 <Border Grid.Row="1" Margin="7" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="20" >
                 <Border.Effect>

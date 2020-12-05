@@ -80,6 +80,8 @@ namespace TextEditorView.Model
             return File_Path_Text;
         }
         #endregion
+
+        #region get flow docs from file dialog
         public static FlowDocumentBox FileOpenFlowDoc()
         {
             FlowDocument Text_Container = new FlowDocument();
@@ -90,6 +92,7 @@ namespace TextEditorView.Model
 
             if (dlg.ShowDialog() == true)
             {
+
                 TextRange doc = new TextRange(Text_Container.ContentStart, Text_Container.ContentEnd);
                 File_Path_Text = dlg.FileName;
                 using (FileStream fs = new FileStream(dlg.FileName, FileMode.Open))
@@ -105,9 +108,10 @@ namespace TextEditorView.Model
 
             }
             return new FlowDocumentBox(Text_Container,File_Path_Text);
+           
         }
 
-        public static FlowDocumentBox SaveFileFlowDoc( FlowDocumentBox DocBox)
+        public static FlowDocumentBox SaveFileFlowDoc(FlowDocumentBox DocBox)
         { 
             if (DocBox.DocumentPathInFileSystem == String.Empty)
             {
@@ -151,5 +155,6 @@ namespace TextEditorView.Model
             }
             return new FlowDocumentBox(Document,filePath);
         }
+        #endregion
     }
 }

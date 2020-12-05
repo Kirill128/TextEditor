@@ -5,12 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TextEditorView.View"
              mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="110">
-
-    <Border Background="White"  CornerRadius="20" HorizontalAlignment="Left" Width="Auto" >
+             d:DesignHeight="30" d:DesignWidth="110">
+    <UserControl.Resources>
+        <Style TargetType="Border" x:Key="NameStyle">
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=ButtonFileName, Path=IsChecked}" Value="True">
+                    <DataTrigger.Setters>
+                        <Setter Property="BorderBrush" Value="Blue" />
+                    </DataTrigger.Setters>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    <Border Background="White"  CornerRadius="20" HorizontalAlignment="Left" Width="Auto" x:Name="BorderOfButton" Style="{StaticResource NameStyle}">
         <StackPanel Orientation="Horizontal">
-            <Button BorderBrush="Transparent" Background="Transparent"  Foreground="Black" Content="File" Width="Auto"/>
-            <Button BorderBrush="Transparent" Background="Transparent" >
+            <ToggleButton x:Name="ButtonFileName" BorderBrush="Transparent" Background="Transparent"  Foreground="Black"  Width="Auto" Click="ButtonFileName_Click"/>
+            <Button BorderBrush="Transparent"  Background="Transparent" x:Name="ButtonClose" Click="ButtonClose_Click">
                 <Image Source="/View/cross.png" Height="10" Width="10" />
             </Button>
         </StackPanel>
