@@ -5,7 +5,7 @@ using System.Windows.Documents;
 
 namespace ParserWithList
 {
-    class WordBox
+    public class WordBox
     {
         public int Count { get; set; }
         public LinkedList<int> MeetInLines { set; get; }

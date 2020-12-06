@@ -1,6 +1,6 @@
 namespace ParserWithList
 {
-    class Letter:Symbol{
+    public class Letter :Symbol{
         private char val;
         public override char Value{
             get{return val;}

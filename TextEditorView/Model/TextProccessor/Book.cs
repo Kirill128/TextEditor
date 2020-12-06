@@ -5,7 +5,8 @@ using System.IO;
 
 namespace ParserWithList
 {
-    class Book{
+    public class Book
+    {
         public string FilePath{get;set;}
         public int maxLinesInPage{get;set;}
         public LinkedList<Page> Pages;

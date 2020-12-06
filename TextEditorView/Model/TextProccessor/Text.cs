@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ParserWithList {
-	class Text {
+	public class Text {
 		public List<Sentens> Sentenses { get; set; }
 		public string Value {
 			get {

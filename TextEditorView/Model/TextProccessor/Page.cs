@@ -5,7 +5,8 @@ using System.IO;
 
 namespace ParserWithList
 {
-    class Page{
+    public class Page
+    {
         public int NumOfPage{get;set;}
         public LinkedList<Line> Lines {get;set;}
         public Page(LinkedList<Line> lines){

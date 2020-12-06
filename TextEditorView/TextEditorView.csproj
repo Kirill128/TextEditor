@@ -21,6 +21,7 @@
     <None Remove="View\FotoFolder.jpg" />
     <None Remove="View\FotoSpecial.jpg" />
     <None Remove="View\MainWindowFoto.jpg" />
+    <None Remove="View\Proccessor.jpg" />
     <None Remove="View\settings.png" />
     <None Remove="View\text_bold.png" />
     <None Remove="View\text_italic.png" />
@@ -37,6 +38,7 @@
     <Resource Include="View\FotoFolder.jpg" />
     <Resource Include="View\FotoSpecial.jpg" />
     <Resource Include="View\MainWindowFoto.jpg" />
+    <Resource Include="View\Proccessor.jpg" />
     <Resource Include="View\settings.png" />
     <Resource Include="View\text_bold.png" />
     <Resource Include="View\text_italic.png" />

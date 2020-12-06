@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ParserWithList
 {
-	class Line
+	public class Line
 	{
 		public LinkedList<Word> Words { get; set; }
 		public LinkedList<PunctuationSymbol> PunctuationSymbols { get; set; }

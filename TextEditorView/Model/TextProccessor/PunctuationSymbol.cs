@@ -1,6 +1,6 @@
 namespace ParserWithList
 {
-	class PunctuationSymbol:Symbol {
+    public class PunctuationSymbol :Symbol {
         private char val;
         private static char[] punctsSymb = new char[] { ',', ':', '!', '?', '-', '.', '\\', '_'};
         public int PositionByWord{get;set;}

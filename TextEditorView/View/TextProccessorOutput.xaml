@@ -1,0 +1,43 @@
+﻿<Window x:Class="TextEditorView.View.TextProccessorOutput"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:TextEditorView.View"
+        mc:Ignorable="d"
+        Title="TextProccessorOutput" Height="500" Width="300">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="Controls" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <TextBox  materialDesign:HintAssist.Hint="Find in text below"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  />
+                <Button Content="Find "/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1">
+                <RadioButton GroupName="ChangeInWindow" Content="Change text only in this Window" IsChecked="True"/>
+                <RadioButton GroupName="ChangeInWindow" Content="Change text also in Main Window" />
+
+                <RadioButton GroupName="ChooseWindowForPanelSpecial" Content="Use bold, italic, ... Main Window" IsChecked="True"/>
+                <RadioButton GroupName="ChooseWindowForPanelSpecial" Content="Use bold, italic, ... this Window" />
+
+                <Button Content="Show lines and count in text(Concordance)"/>
+            </StackPanel>
+
+        </Grid>
+
+
+        <RichTextBox x:Name="TextProccessorBox" Grid.Row="1" />
+
+    </Grid>
+</Window>

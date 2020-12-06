@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace ParserWithList {
-	class Word {
+	public class Word {
 		public List<Symbol> Symbols { get; set; }
 		public string Value { 
 			get{

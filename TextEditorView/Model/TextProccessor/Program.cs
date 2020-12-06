@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ParserWithList
 {
-    class Program
+    public class Program
     { //"I:\\Practice\\C#\\ParserWithList\\data\\Text.txt"      "/home/kirill/Practice/C#/ParserWithList/data/Text.txt"
         private static string filePath="/home/kirill/Practice/C#/ParserWithList/data/Text.txt";
         static void cat(string[] args)

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ParserWithList
 {
-	class Sentens{
+	public class Sentens{
         public List<Word> Words{get;set;}
 		public List<PunctuationSymbol> PunctuationSymbols{get;set;}
 		

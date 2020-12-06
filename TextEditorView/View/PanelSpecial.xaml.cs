@@ -39,12 +39,16 @@ namespace TextEditorView.View
             CurrentTextContainer = rtb;
 
             CurrentTextContainer.SelectionChanged += CurrentTextContainer_SelectionChanged;
-
+            //add font families to combobox
             cmbFontFamily.ItemsSource = Fonts.SystemFontFamilies.OrderBy(f => f.Source);
             List<double> l = new List<double>();
             for (int i = 122; i > 0; i--) l.Add(i);
             cmbFontSize.ItemsSource = l;
-            
+           
+            string[] col = new string[] { "Black", "Green", "Yellow", "Red", "Gray" };
+            cmbFontColor.ItemsSource = col;
+            cmbFontBackColor.ItemsSource = col;
+
         }
 
 
@@ -244,7 +248,8 @@ namespace TextEditorView.View
         }
         #endregion
 
-        #region font size and selectionChanged handler
+        #region font size and selectionChanged, color change handler
+        
         private void CurrentTextContainer_SelectionChanged(object sender, RoutedEventArgs e)
         {
             object temp = CurrentTextContainer.Selection.GetPropertyValue(Inline.FontWeightProperty);
@@ -260,6 +265,7 @@ namespace TextEditorView.View
             if (temp != null)cmbFontFamily.SelectedItem = temp;
             temp = CurrentTextContainer.Selection.GetPropertyValue(Inline.FontSizeProperty);
             if (temp != null)cmbFontSize.SelectedItem = temp;
+            
         }
 
 
@@ -281,9 +287,27 @@ namespace TextEditorView.View
             }
             CurrentTextContainer.Focus();
         }
+
+        private void cmbFontColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbFontColor.SelectedItem != null)
+            {
+                CurrentTextContainer.Selection.ApplyPropertyValue(Inline.ForegroundProperty, (SolidColorBrush)new BrushConverter().ConvertFromString((string)cmbFontColor.SelectedItem));
+            }
+            CurrentTextContainer.Focus();
+        }
+
+        private void cmbFontBackColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmbFontBackColor.SelectedItem != null)
+            {
+                CurrentTextContainer.Selection.ApplyPropertyValue(Inline.BackgroundProperty,(SolidColorBrush)new BrushConverter().ConvertFromString((string)cmbFontBackColor.SelectedItem));
+            }
+            CurrentTextContainer.Focus();
+        }
         #endregion
 
-       
+
     }
 
 }
