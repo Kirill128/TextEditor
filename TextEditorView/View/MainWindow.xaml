@@ -39,6 +39,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Row="1" Grid.Column="1" >
@@ -86,7 +87,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <Grid Grid.Column="0" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
@@ -97,13 +98,15 @@
                     <ToggleButton x:Name="Button_Folder"   Style="{StaticResource OnOffToggleImageStyle}" Content="{StaticResource FolderImg}"   Grid.Column="0" Grid.Row="0"  VerticalAlignment="Top" IsChecked="False" Click="Button_Folder_Click" />
                     <ToggleButton x:Name="Button_Special"  Style="{StaticResource OnOffToggleImageStyle}" Content="{StaticResource SpecialImg}"  Grid.Column="0" Grid.Row="1"  VerticalAlignment="Top" IsChecked="False" Click="Button_Special_Click" />
                     <ToggleButton x:Name="Button_Settings" Style="{StaticResource OnOffToggleImageStyle}" Content="{StaticResource SettImg}"     Grid.Column="0" Grid.Row="2"  VerticalAlignment="Top" IsChecked="False" Click="Button_Settings_Click"/>
-                    
+
                 </Grid>
 
-               
-                
+
+
             </Grid>
-            
+
+            <local:PanelForTextProcessorToEdit Grid.Column="2"/>
+
         </Grid>
         
         

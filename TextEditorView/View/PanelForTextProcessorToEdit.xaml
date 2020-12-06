@@ -5,17 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TextEditorView.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        
-        <Button />
-        
-        <RichTextBox />
-    </Grid>
+             d:DesignHeight="450" d:DesignWidth="400">
+    <StackPanel Background="White">
+
+        <Grid x:Name="Controls">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <Button Content="Find"/>
+                <TextBox Style="{StaticResource MaterialDesignFloatingHintTextBox}"  />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1">
+                <RadioButton GroupName="ChangeInWindow" Content="Change only in this Window" IsChecked="True"/>
+                <RadioButton GroupName="ChangeInWindow" Content="Change also in Main Window" />
+
+                <RadioButton GroupName="ChooseWindowForPanelSpecial" Content="Use bold, italic, ... Main Window" IsChecked="True"/>
+                <RadioButton GroupName="ChooseWindowForPanelSpecial" Content="Use bold, italic, ... this Window" />
+            </StackPanel>
+
+        </Grid>
+
+        <RichTextBox x:Name="TextProccessorBox" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+    </StackPanel>
 </UserControl>

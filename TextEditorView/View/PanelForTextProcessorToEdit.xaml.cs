@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TextEditorView.Model;
 
 namespace TextEditorView.View
 {
@@ -18,9 +19,11 @@ namespace TextEditorView.View
     /// </summary>
     public partial class PanelForTextProcessorToEdit : UserControl
     {
+        public FlowDocumentBox SelectedDocumentBox { get; set; }
         public PanelForTextProcessorToEdit()
         {
             InitializeComponent();
         }
+
     }
 }

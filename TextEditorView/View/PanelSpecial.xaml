@@ -24,6 +24,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -32,6 +33,7 @@
 
         <ComboBox Grid.Row="0" Grid.Column="0" Name="cmbFontFamily" Width="150" SelectionChanged="cmbFontFamily_SelectionChanged" Focusable="False"/>
         <ComboBox Grid.Row="1" Grid.Column="0" Name="cmbFontSize"   Width="150" SelectionChanged="cmbFontSize_TextChanged"  Focusable="False"/>
+        <ComboBox Grid.Row="0" Grid.Column="3" Name="cmbFontColor"   Width="150"   Focusable="False"/>
 
         <ToggleButton  Grid.Row="0" Grid.Column="1" Command="EditingCommands.ToggleBold"  Style="{StaticResource OnOffToggleImageStyle}" Name="btnBold" IsEnabled="True" >
             <Image Source="/View/text_bold.png" Width="16" Height="16" />

@@ -52,3 +52,6 @@ I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ButtonForFlowDoc.g.cs
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ButtonForFlowDoc.baml
 C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ButtonForFlowDoc.g.cs
 C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ButtonForFlowDoc.baml
+C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\PanelForTextProcessorToEdit.g.cs
+C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\PanelForTextProcessorToEdit.baml
+C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs

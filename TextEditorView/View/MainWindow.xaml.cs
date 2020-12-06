@@ -200,6 +200,7 @@ namespace TextEditorView.View
                     File_Path_Text.Text = DocumentsViewModel.SelectedDocumentBox.DocumentPathInFileSystem;
                     foreach (ButtonForFlowDoc b in ButtonsFlowDocs) b.ButtonFileName.IsChecked = false;
                     DocumentsViewModel.SelectedDocumentBox.ButtonToManipulateDoc.ButtonFileName.IsChecked = true;
+                    
                     break;
                 case "FlowDocuments":
                     //Just make all buttons in listbox according to FlowDocs observablecollection and input
