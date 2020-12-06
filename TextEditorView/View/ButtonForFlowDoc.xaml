@@ -5,27 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TextEditorView.View"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="110">
+             d:DesignHeight="30" d:DesignWidth="100">
     <UserControl.Resources>
-        <Style TargetType="Border" x:Key="NameStyle">
-            <Setter Property="BorderBrush" Value="Transparent" />
+        <Style x:Key="OnOffToggleImageStyle" TargetType="ToggleButton" >
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=ButtonFileName, Path=IsChecked}" Value="True">
-                    <DataTrigger.Setters>
-                        <Setter Property="BorderBrush" Value="Blue" />
-                    </DataTrigger.Setters>
-                </DataTrigger>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="Blue"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="False">
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                </Trigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    
-    <Border Background="White"  CornerRadius="20" HorizontalAlignment="Left" Width="Auto" x:Name="BorderOfButton" Style="{StaticResource NameStyle}">
+
+    <Border Background="White"  CornerRadius="20" HorizontalAlignment="Left" Width="Auto" x:Name="BorderOfButton" >
         <StackPanel Orientation="Horizontal">
-            <ToggleButton x:Name="ButtonFileName" BorderBrush="Transparent" Background="Transparent"  Foreground="Black"  Width="Auto" Click="ButtonFileName_Click"/>
-            <Button BorderBrush="Transparent"  Background="Transparent" x:Name="ButtonClose" Click="ButtonClose_Click">
-                <Image Source="/View/cross.png" Height="10" Width="10" />
+            <ToggleButton x:Name="ButtonFileName"  Foreground="Black" Background="Transparent" HorizontalAlignment="Center" Margin="20 0 0 0" Width="Auto" Click="ButtonFileName_Click" Style="{StaticResource OnOffToggleImageStyle}"  />
+            <Button Background="Transparent" BorderBrush="Transparent" x:Name="ButtonClose" Click="ButtonClose_Click" VerticalAlignment="Center" HorizontalAlignment="Right" >
+                <Image Source="/View/close_icon-icons.com_67964.png" HorizontalAlignment="Stretch"/>
             </Button>
         </StackPanel>
     </Border>
+
 
 </UserControl>

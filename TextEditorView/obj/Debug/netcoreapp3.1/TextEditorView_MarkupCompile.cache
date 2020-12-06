@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\
+I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\
 TextEditorView
 none
 false
-TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
-C:\Users\Laptop\source\repos\TextEditor\TextEditorView\App.xaml
+TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
+I:\TextEditor\TextEditorView\App.xaml
 31524753165
 
-9-50212254
-1941205226817
+20-1494020124
+1941319279606
 View\ButtonForFlowDoc.xaml;View\MainWindow.xaml;View\PanelSpecial.xaml;
 
 False

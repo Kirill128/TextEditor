@@ -25,7 +25,7 @@ namespace TextEditorView.ViewModel
             get { return selectedDocumentBox; }
             set {
                 selectedDocumentBox = value;
-                OnPropertyChanged("SelectedDocuments");
+                OnPropertyChanged("SelectedDocument");
             }
         }
 
@@ -35,7 +35,7 @@ namespace TextEditorView.ViewModel
 
         #region selected file new, open, save, save as actions
         public void FileNewInCollectionAndWindow() {
-            FlowDocumentBox newDoc = new FlowDocumentBox(new FlowDocument(), "C:\\Users\\Laptop\\NewFile.rtf");
+            FlowDocumentBox newDoc = new FlowDocumentBox(new FlowDocument(), "NewFile");
             FlowDocumentsBoxes.Add(newDoc);
             SelectedDocumentBox = newDoc;
         }

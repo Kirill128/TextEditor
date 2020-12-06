@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -110,10 +111,11 @@ namespace TextEditorView.Model
             return new FlowDocumentBox(Text_Container,File_Path_Text);
            
         }
+    
 
         public static FlowDocumentBox SaveFileFlowDoc(FlowDocumentBox DocBox)
         { 
-            if (DocBox.DocumentPathInFileSystem == String.Empty)
+            if (DocBox.DocumentPathInFileSystem == String.Empty || !Regex.IsMatch(DocBox.DocumentPathInFileSystem,@"^\w:\\"))
             {
                 DocBox=SaveFileAsFlowDoc(DocBox.Document);
             }

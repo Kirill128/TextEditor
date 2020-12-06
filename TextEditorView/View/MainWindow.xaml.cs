@@ -177,31 +177,29 @@ namespace TextEditorView.View
             doc.Text = "";
         }
 
-        #region doc select change handler
+        #region doc select change handler                  contain bindign to handlers when select doc or close doc
         private void Changes_Flow_Docs(object sender, NotifyCollectionChangedEventArgs e) {
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     ButtonForFlowDoc but = new ButtonForFlowDoc(e.NewItems[0] as FlowDocumentBox);
                     ButtonsFlowDocs.Add(but);
-                    but.ButtonFileSelectClick +=Button_Doc_SelectChange_EventHandler;
-                    but.ButtonFileCloseClick +=Button_Doc_Close_EventHandler;
+                    but.ButtonFileSelectClick +=Button_Doc_SelectChange_EventHandler;           //Binding to select 
+                    but.ButtonFileCloseClick +=Button_Doc_Close_EventHandler;                  //Binding to close
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    foreach (ButtonForFlowDoc d in ButtonsFlowDocs) if ((e.OldItems[0] as FlowDocumentBox).Equals(d.FlowDocBox)) {
-                            ButtonsFlowDocs.Remove(d);
-
-                            break;
-                    }
+                    ButtonsFlowDocs.Remove((e.OldItems[0]as FlowDocumentBox).ButtonToManipulateDoc);
                     break;
             } 
         }
         private void Current_Doc_Changed(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName) {
-                case "SelectedDocuments":
+                case "SelectedDocument":
                     Text_Container.Document = DocumentsViewModel.SelectedDocumentBox.Document;
                     File_Path_Text.Text = DocumentsViewModel.SelectedDocumentBox.DocumentPathInFileSystem;
+                    foreach (ButtonForFlowDoc b in ButtonsFlowDocs) b.ButtonFileName.IsChecked = false;
+                    DocumentsViewModel.SelectedDocumentBox.ButtonToManipulateDoc.ButtonFileName.IsChecked = true;
                     break;
                 case "FlowDocuments":
                     //Just make all buttons in listbox according to FlowDocs observablecollection and input
@@ -229,28 +227,30 @@ namespace TextEditorView.View
         }
 
         private void Save_File_Command(object sender, ExecutedRoutedEventArgs e) {
-            FileSystemDialogMethods.SaveFile(File_Path_Text.Text,Text_Container);
+            DocumentsViewModel.FileSaveInCollectionAndWindow();
         }
         #endregion
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        #region work with docs list to select doc ,close doc etc.          if doc close make select first in collection     !!НЕЛЬЗЯ ВО VIEWMODEL ПОТОМУ ЧТО ТОГДА ЭТО БУДЕТ ПРИВЯЗКА К ОПРЕДЕЛЁННОМУ VIEW!! 
         private void Button_Doc_SelectChange_EventHandler(object sender) {
-            DocumentsViewModel.SelectedDocumentBox = (sender as ButtonForFlowDoc).FlowDocBox;
+            ButtonForFlowDoc selection = (sender as ButtonForFlowDoc);
+            DocumentsViewModel.SelectedDocumentBox = selection.FlowDocBox;
         }
-        private void Button_Doc_Close_EventHandler(object sender)
+        private void Button_Doc_Close_EventHandler(object sender)/////                  if doc close make select first in collection 
         {
-
             DocumentsViewModel.FlowDocumentsBoxes.Remove((sender as ButtonForFlowDoc).FlowDocBox);
             if (DocumentsViewModel.FlowDocumentsBoxes.Count > 0)
                 DocumentsViewModel.SelectedDocumentBox = DocumentsViewModel.FlowDocumentsBoxes[0];
             else
                 File_New_Command(null, null);   
         }
+        #endregion
+
         private void Shortcut_Key_Events(object sender, KeyEventArgs e)
         {
             if (e.KeyboardDevice.Modifiers == ModifierKeys.Shift && e.Key == Key.S)
             {
-                FileSystemDialogMethods.SaveFile(File_Path_Text.Text,Text_Container);
+                Save_File_Command(null,null);
             }
         }
 

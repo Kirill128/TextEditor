@@ -16,6 +16,7 @@
     <None Remove="MainWindowFoto.jpg" />
     <None Remove="MainWindowFotoArch.jpg" />
     <None Remove="settings.png" />
+    <None Remove="View\close_icon-icons.com_67964.png" />
     <None Remove="View\cross.png" />
     <None Remove="View\FotoFolder.jpg" />
     <None Remove="View\FotoSpecial.jpg" />
@@ -31,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="View\close_icon-icons.com_67964.png" />
     <Resource Include="View\cross.png" />
     <Resource Include="View\FotoFolder.jpg" />
     <Resource Include="View\FotoSpecial.jpg" />

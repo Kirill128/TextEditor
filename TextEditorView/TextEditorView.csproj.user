@@ -15,6 +15,9 @@
     <Compile Update="View\PanelSpecial.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\PanelForTextProcessorToEdit.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="View\ButtonForFlowDoc.xaml">
@@ -24,6 +27,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\PanelSpecial.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\PanelForTextProcessorToEdit.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
