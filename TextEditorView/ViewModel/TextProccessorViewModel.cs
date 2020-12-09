@@ -32,11 +32,9 @@ namespace TextEditorView.ViewModel
             Regex reg = new Regex(@patternOfRegex);
             MatchCollection matches = reg.Matches(new TextRange(DocBox.Document.ContentStart, DocBox.Document.ContentEnd).Text);
             foreach (Match m in matches) {
-                result.AddLast(new WordBox());
-
-
+                result.AddLast(new WordBox(new Word(m.Value),m.Index));
             }
-            return null;
+            return result;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

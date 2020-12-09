@@ -22,6 +22,7 @@ using TextEditorView.Model;
 using TextEditorView.ViewModel;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using ParserWithList;
 
 namespace TextEditorView.View
 {
@@ -74,6 +75,8 @@ namespace TextEditorView.View
         public ObservableCollection<ButtonForFlowDoc> ButtonsFlowDocs { get; set; }
 
         public TextProccessorViewModel ProccessorViewModel { get; set; }
+        
+        public TextProccessorOutput ProccessorOutput { get; set; }
 
         public MainWindow()
         {
@@ -262,9 +265,21 @@ namespace TextEditorView.View
         #region panel proccessor edit text  handlers
         private void Find_Command(object sender, ExecutedRoutedEventArgs e)
         {
+            LinkedList<WordBox> boxes =TextProccessorViewModel.Find(DocumentsViewModel.SelectedDocumentBox,"PATTERN");
             
+            foreach (WordBox b in boxes) {
+                TextPointer start=DocumentsViewModel.SelectedDocumentBox.Document.ContentStart.GetPositionAtOffset(b.StartInText);
+                TextPointer end = DocumentsViewModel.SelectedDocumentBox.Document.ContentStart.GetPositionAtOffset(b.EndInText);
+                TextRange word = new TextRange(start,end);
+                word.ApplyPropertyValue(Inline.BackgroundProperty,Brushes.Gray);
+            }
+
+            //ProccessorOutput = new TextProccessorOutput();
+
+            //ProccessorOutput.TextProccessorBox
         }
         #endregion
+
         #region work with docs list to select doc ,close doc etc.          if doc close make select first in collection     !!НЕЛЬЗЯ ВО VIEWMODEL ПОТОМУ ЧТО ТОГДА ЭТО БУДЕТ ПРИВЯЗКА К ОПРЕДЕЛЁННОМУ VIEW!! 
         private void Button_Doc_SelectChange_EventHandler(object sender) {
             ButtonForFlowDoc selection = (sender as ButtonForFlowDoc);

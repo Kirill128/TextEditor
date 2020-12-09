@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "t0dshiaI2wUqE7iWFjktD/jEXOUupH8kKXurarSxpw++F5EwBlcLpbS5WL42NPF1zLyuq1xmqlWzHRu0650h1w==",
+  "dgSpecHash": "ODPYKHzefHLjzdyhlKwgCPZQ88gEySTywsjf41s+ovO+aGaf8rcAisDgMO0c/Zj04nztmNSh5RBgKqs9sooNSQ==",
   "success": true,
-  "projectFilePath": "I:\\TextEditor\\TextEditorView\\TextEditorView.csproj",
+  "projectFilePath": "C:\\Users\\Laptop\\source\\repos\\TextEditor\\TextEditorView\\TextEditorView.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Кирилл\\.nuget\\packages\\materialdesigncolors\\1.2.7\\materialdesigncolors.1.2.7.nupkg.sha512",
-    "C:\\Users\\Кирилл\\.nuget\\packages\\materialdesignthemes\\3.2.0\\materialdesignthemes.3.2.0.nupkg.sha512"
+    "C:\\Users\\Laptop\\.nuget\\packages\\materialdesigncolors\\1.2.7\\materialdesigncolors.1.2.7.nupkg.sha512",
+    "C:\\Users\\Laptop\\.nuget\\packages\\materialdesignthemes\\3.2.0\\materialdesignthemes.3.2.0.nupkg.sha512"
   ],
   "logs": []
 }
