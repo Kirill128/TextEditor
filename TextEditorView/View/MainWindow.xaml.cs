@@ -185,27 +185,31 @@ namespace TextEditorView.View
             TextBox textToFind = new TextBox();
             textToFind.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
 
-
             Button find = new Button();
             find.Content = "Find";
             find.Command = ApplicationCommands.Find;
             find.Background = new SolidColorBrush(Colors.Transparent);
             find.Foreground = new SolidColorBrush(Colors.Black);
 
-
+            Button openProccessor = new Button();
+            openProccessor.Content = "Open Proccessor Window";
+            openProccessor.Click += Show_ProccessorWindow;
+            openProccessor.Background = new SolidColorBrush(Colors.Transparent);
+            openProccessor.Foreground = new SolidColorBrush(Colors.Black);
 
             StackPanel panel = new StackPanel();
             panel.Visibility = Visibility.Collapsed;
             Grid.SetColumn(panel, 1);
             panel.Children.Add(textToFind);
+            panel.Children.Add(openProccessor);
             panel.Children.Add(find);
            
-
             return panel;
         }
+
         #endregion
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         #region doc select change handler                  contain bindign to handlers when select doc or close doc      binding Proccessor selected doc to documentsVM selectedDoc
         private void Changes_Flow_Docs(object sender, NotifyCollectionChangedEventArgs e) {
             switch (e.Action)
@@ -263,17 +267,34 @@ namespace TextEditorView.View
         #endregion
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         #region panel proccessor edit text  handlers
+
+        private static void Show_ProccessorWindow(object sender , RoutedEventArgs e) {
+            
+        }
+        
         private void Find_Command(object sender, ExecutedRoutedEventArgs e)
         {
             LinkedList<WordBox> boxes =TextProccessorViewModel.Find(DocumentsViewModel.SelectedDocumentBox,"PATTERN");
-            
-            foreach (WordBox b in boxes) {
-                TextPointer start=DocumentsViewModel.SelectedDocumentBox.Document.ContentStart.GetPositionAtOffset(b.StartInText);
-                TextPointer end = DocumentsViewModel.SelectedDocumentBox.Document.ContentStart.GetPositionAtOffset(b.EndInText);
-                TextRange word = new TextRange(start,end);
-                word.ApplyPropertyValue(Inline.BackgroundProperty,Brushes.Gray);
+            LinkedListNode<WordBox> firstBox = boxes.First;
+            int symbolsCount = 0;
+            for (Block b = DocumentsViewModel.SelectedDocumentBox.Document.Blocks.FirstBlock; b != null; b = b.NextBlock)
+            {
+                TextRange blockrange = new TextRange(b.ContentStart, b.ContentEnd);
+                symbolsCount--;
+                for (;firstBox!=null;firstBox=firstBox.Next) { 
+                    if (blockrange.Text.Length < firstBox.Value.Word.Symbols.Count) break;
+
+                    TextPointer start = b.ContentStart.GetPositionAtOffset(firstBox.Value.StartInText-symbolsCount);
+                    TextPointer end = b.ContentStart.GetPositionAtOffset(firstBox.Value.EndInText-symbolsCount);
+                    TextRange word = new TextRange(start, end);
+
+                    word.ApplyPropertyValue(Inline.BackgroundProperty, Brushes.Gray);
+                }
+                symbolsCount += blockrange.Text.Length;
+                
             }
 
+            
             //ProccessorOutput = new TextProccessorOutput();
 
             //ProccessorOutput.TextProccessorBox
