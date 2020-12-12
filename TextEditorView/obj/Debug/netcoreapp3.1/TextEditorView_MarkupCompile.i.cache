@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\
+C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\
 TextEditorView
 none
 false
-TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
-I:\TextEditor\TextEditorView\App.xaml
+TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
+C:\Users\Laptop\source\repos\TextEditor\TextEditorView\App.xaml
 4248095358
 
 23-2124800678
-1941319279606
+1941205226817
 View\ButtonForFlowDoc.xaml;View\MainWindow.xaml;View\PanelSpecial.xaml;View\ProccessorControl.xaml;
 
-True
+False
 

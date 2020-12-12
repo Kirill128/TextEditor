@@ -34,38 +34,29 @@ namespace TextEditorView.View
 
         //////////////////////////////////// Inizialisation Data //////////////////////////////////////////////////////////// 
         #region
-        private const int lengthOfLeftPanelButtons = 3;
         private ToggleButton[] LeftPanelButtons;// left button with icons 
         /*
          * 0 - Button Folder
          * 1 - Button Settings
-         * 2 - Button Proccessor
         */
-        private const int lengthOfTopPanelButtons = 1;
+
         private ToggleButton[] TopPanelButtons;
         /*
           0- Button Special
+          1- Button Proccessor
         */
 
-        private const int lengthOfLeftPanelStack = 3;
         private StackPanel[] AllLeftPanels; //left  panels for left buttons with icons
         /*
          * 0 - Panel for Button Folder
          * 1 - Panel for Button Settings
-         * 2 - Panel for Button Proccessor
          */
 
-
-        private PanelSpecial currentTopControl;
-        public PanelSpecial CurrentTopControl {
-            get { return currentTopControl; }
-            set {
-                currentTopControl = value;
-                currentTopControl.Visibility = Visibility.Collapsed;
-                Grid.SetRow(value, 0);
-                MainGrid.Children.Add(currentTopControl);
-            }
-        }
+        private UserControl[] AllTopControls; // top control to work with text in Text_Container
+        /*
+         * 0 - Panel Special Control for Button Folder
+         * 1 - ProccessorControl for Button Proccessor
+         */
         // top panels for left buttons with icons
         //  Panel for Button Special
         #endregion
@@ -76,18 +67,27 @@ namespace TextEditorView.View
 
         public TextProccessorViewModel ProccessorViewModel { get; set; }
         
-        public TextProccessorOutput ProccessorOutput { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
-            CurrentTopControl = new PanelSpecial(Text_Container);
+            LeftPanelButtons = new ToggleButton[] { Button_Folder, Button_Settings };
+            TopPanelButtons = new ToggleButton[] { Button_Special , Button_Proccessor};
 
-            LeftPanelButtons = new ToggleButton[lengthOfLeftPanelButtons] { Button_Folder, Button_Settings, Button_Proccessor };
-            TopPanelButtons = new ToggleButton[lengthOfTopPanelButtons] { Button_Special };
+            AllLeftPanels = new StackPanel[] { MakePanelButtonsOpenFileSystem(), MakePanelButtonsSettings() };
 
-            AllLeftPanels = new StackPanel[lengthOfLeftPanelStack] { MakePanelButtonsOpenFileSystem(), MakePanelButtonsSettings() ,MakePanelProccessor() };
+            PanelSpecial panelSpecial = new PanelSpecial(this.Text_Container);
+            panelSpecial.Visibility = Visibility.Collapsed;
+            Grid.SetRow(panelSpecial, 0);
+            MainGrid.Children.Add(panelSpecial);
+
+            ProccessorControl proccessorControl = new ProccessorControl(this.Text_Container);
+            proccessorControl.Visibility = Visibility.Collapsed;
+            Grid.SetRow(proccessorControl, 1);
+            MainGrid.Children.Add(proccessorControl);
+
+            AllTopControls = new UserControl[] { panelSpecial,proccessorControl };
 
             foreach (StackPanel s in AllLeftPanels) {
                 LeftWorkPanel.Children.Add(s);
@@ -101,7 +101,6 @@ namespace TextEditorView.View
             ButtonsChangeFlowDoc.ItemsSource = ButtonsFlowDocs;
 
             ProccessorViewModel = new TextProccessorViewModel();
-            ProccessorOutput = new TextProccessorOutput();
 
             this.DataContext = DocumentsViewModel;
 
@@ -182,34 +181,6 @@ namespace TextEditorView.View
             return panel;
         }
 
-        public  StackPanel MakePanelProccessor() {
-            TextBox textToFind = new TextBox();
-            textToFind.Background= new SolidColorBrush(Colors.White);
-            textToFind.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
-            textToFind.Margin = new Thickness(1,15,1,1);
-
-            Button find = new Button();
-            find.Content = "Find";
-            find.Command = ApplicationCommands.Find;
-            find.Background = new SolidColorBrush(Colors.Transparent);
-            find.Foreground = new SolidColorBrush(Colors.Black);
-
-            Button openProccessor = new Button();
-            openProccessor.Content = "Proccessor";
-            openProccessor.Click +=Show_ProccessorWindow;     
-            openProccessor.Background = new SolidColorBrush(Colors.Transparent);
-            openProccessor.Foreground = new SolidColorBrush(Colors.Black);
-
-            StackPanel panel = new StackPanel();
-            panel.Visibility = Visibility.Collapsed;
-            Grid.SetColumn(panel, 1);
-            panel.Children.Add(textToFind);
-            panel.Children.Add(openProccessor);
-            panel.Children.Add(find);
-           
-            return panel;
-        }
-
         #endregion
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -234,7 +205,7 @@ namespace TextEditorView.View
                 case "SelectedDocument":
                     Text_Container.Document = DocumentsViewModel.SelectedDocumentBox.Document;
                     File_Path_Text.Text = DocumentsViewModel.SelectedDocumentBox.DocumentPathInFileSystem;
-                    foreach (ButtonForFlowDoc b in ButtonsFlowDocs) b.ButtonFileName.IsChecked = false;
+                    foreach (ButtonForFlowDoc b in ButtonsFlowDocs) b.ButtonFileName.IsChecked = false;// can't just close particular button because i don't have old value
                     DocumentsViewModel.SelectedDocumentBox.ButtonToManipulateDoc.ButtonFileName.IsChecked = true;
                     ProccessorViewModel.SelectedToProccess = DocumentsViewModel.SelectedDocumentBox;
                     break;
@@ -269,11 +240,11 @@ namespace TextEditorView.View
 
         #endregion
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        #region panel proccessor edit text  handlers
+        #region panel proccessor text edit handlers
 
         private void Show_ProccessorWindow(object sender, RoutedEventArgs e) {
             
-            ProccessorOutput.Show();
+            
 
         }
        
@@ -286,7 +257,7 @@ namespace TextEditorView.View
                 TextPointer start = GetTextPointerAtOffset(DocumentsViewModel.SelectedDocumentBox.Document,w.StartInText);
                 TextPointer end = GetTextPointerAtOffset(DocumentsViewModel.SelectedDocumentBox.Document, w.EndInText);
                 TextRange word = new TextRange(start, end);
-                word.ApplyPropertyValue(Inline.BackgroundProperty, Brushes.Gray);
+                word.ApplyPropertyValue(Inline.BackgroundProperty, Brushes.GhostWhite);
 
             }
             
@@ -369,11 +340,8 @@ namespace TextEditorView.View
         {
             HideLeftButtonsAndShowOneLeftPanel(sender, 1, 1);
         }
-        private void Button_Proccessor_Click(object sender, RoutedEventArgs e)
-        {
-            HideLeftButtonsAndShowOneLeftPanel(sender, 2, 2);
-        }
-        private void HideLeftButtonsAndShowOneLeftPanel(object sender, int numOfLeftPanel, int numOfLeftButton) {
+       
+        private void HideLeftButtonsAndShowOneLeftPanel(object sender, int numOfLeftPanel, int numOfLeftButton ) {
             ToggleButton buttonFolder = (ToggleButton)sender;
             if ((bool)buttonFolder.IsChecked)
             {
@@ -395,12 +363,37 @@ namespace TextEditorView.View
         
         private void Button_Special_Click(object sender, RoutedEventArgs e)
         {
-            CurrentTopControl.Visibility = (Button_Special.IsChecked == true) ? Visibility.Visible : Visibility.Collapsed;
+            HideLeftButtonsAndShowOneTopPanel(sender,0,0);
+        }
+        private void Button_Proccessor_Click(object sender, RoutedEventArgs e)
+        {
+            HideLeftButtonsAndShowOneTopPanel(sender,1,1);
         }
 
+        private void HideLeftButtonsAndShowOneTopPanel(object sender, int numOfLeftPanel, int numOfLeftButton)
+        {
+            ToggleButton buttonFolder = (ToggleButton)sender;
+            if ((bool)buttonFolder.IsChecked)
+            {
+                foreach (ToggleButton t in TopPanelButtons)
+                {
+                    t.IsChecked = false;
+                }
+                foreach (UserControl s in AllTopControls)
+                {
+                    s.Visibility = Visibility.Collapsed;
+                }
+                TopPanelButtons[numOfLeftButton].IsChecked = true;
+                AllTopControls[numOfLeftPanel].Visibility = Visibility.Visible;
+            }
+            else
+            {
+                AllTopControls[numOfLeftPanel].Visibility = Visibility.Collapsed;
+            }
+        }
         #endregion
 
-        
+
     }
 
 
