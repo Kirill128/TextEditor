@@ -15,7 +15,7 @@
     <Compile Update="View\PanelSpecial.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\TextProccessorOutput.xaml.cs">
+    <Compile Update="View\ProccessorControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <Page Update="View\PanelSpecial.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\TextProccessorOutput.xaml">
+    <Page Update="View\ProccessorControl.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

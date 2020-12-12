@@ -31,7 +31,7 @@
         <Image x:Key="Proccessor" Source="/View/Proccessor.jpg" />
     </Window.Resources>
     
-    <Grid x:Name="MainGrid"  Background="#ffdadada" ShowGridLines="True">
+    <Grid x:Name="MainGrid"  Background="#ffdadada" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>

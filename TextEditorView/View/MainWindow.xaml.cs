@@ -101,6 +101,7 @@ namespace TextEditorView.View
             ButtonsChangeFlowDoc.ItemsSource = ButtonsFlowDocs;
 
             ProccessorViewModel = new TextProccessorViewModel();
+            ProccessorOutput = new TextProccessorOutput();
 
             this.DataContext = DocumentsViewModel;
 
@@ -181,9 +182,11 @@ namespace TextEditorView.View
             return panel;
         }
 
-        public static StackPanel MakePanelProccessor() {
+        public  StackPanel MakePanelProccessor() {
             TextBox textToFind = new TextBox();
+            textToFind.Background= new SolidColorBrush(Colors.White);
             textToFind.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            textToFind.Margin = new Thickness(1,15,1,1);
 
             Button find = new Button();
             find.Content = "Find";
@@ -192,8 +195,8 @@ namespace TextEditorView.View
             find.Foreground = new SolidColorBrush(Colors.Black);
 
             Button openProccessor = new Button();
-            openProccessor.Content = "Open Proccessor Window";
-            openProccessor.Click += Show_ProccessorWindow;
+            openProccessor.Content = "Proccessor";
+            openProccessor.Click +=Show_ProccessorWindow;     
             openProccessor.Background = new SolidColorBrush(Colors.Transparent);
             openProccessor.Foreground = new SolidColorBrush(Colors.Black);
 
@@ -268,36 +271,69 @@ namespace TextEditorView.View
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         #region panel proccessor edit text  handlers
 
-        private static void Show_ProccessorWindow(object sender , RoutedEventArgs e) {
+        private void Show_ProccessorWindow(object sender, RoutedEventArgs e) {
             
+            ProccessorOutput.Show();
+
         }
-        
+       
         private void Find_Command(object sender, ExecutedRoutedEventArgs e)
         {
-            LinkedList<WordBox> boxes =TextProccessorViewModel.Find(DocumentsViewModel.SelectedDocumentBox,"PATTERN");
-            LinkedListNode<WordBox> firstBox = boxes.First;
-            int symbolsCount = 0;
-            for (Block b = DocumentsViewModel.SelectedDocumentBox.Document.Blocks.FirstBlock; b != null; b = b.NextBlock)
-            {
-                TextRange blockrange = new TextRange(b.ContentStart, b.ContentEnd);
-                symbolsCount--;
-                for (;firstBox!=null;firstBox=firstBox.Next) { 
-                    if (blockrange.Text.Length < firstBox.Value.Word.Symbols.Count) break;
-
-                    TextPointer start = b.ContentStart.GetPositionAtOffset(firstBox.Value.StartInText-symbolsCount);
-                    TextPointer end = b.ContentStart.GetPositionAtOffset(firstBox.Value.EndInText-symbolsCount);
-                    TextRange word = new TextRange(start, end);
-
-                    word.ApplyPropertyValue(Inline.BackgroundProperty, Brushes.Gray);
-                }
-                symbolsCount += blockrange.Text.Length;
-                
-            }
-
             
-            //ProccessorOutput = new TextProccessorOutput();
+            LinkedList<WordBox> boxes =TextProccessorViewModel.Find(DocumentsViewModel.SelectedDocumentBox,"PATTERN");
 
-            //ProccessorOutput.TextProccessorBox
+            foreach (WordBox w in boxes) {
+                TextPointer start = GetTextPointerAtOffset(DocumentsViewModel.SelectedDocumentBox.Document,w.StartInText);
+                TextPointer end = GetTextPointerAtOffset(DocumentsViewModel.SelectedDocumentBox.Document, w.EndInText);
+                TextRange word = new TextRange(start, end);
+                word.ApplyPropertyValue(Inline.BackgroundProperty, Brushes.Gray);
+
+            }
+            
+        }
+
+        public static TextPointer GetTextPointerAtOffset(FlowDocument document, int offset)
+        {
+            var navigator = document.ContentStart;
+            int cnt = 0;
+
+            while (navigator.CompareTo(document.ContentEnd) < 0)
+            {
+                switch (navigator.GetPointerContext(LogicalDirection.Forward))
+                {
+                    case TextPointerContext.ElementStart:
+                        break;
+                    case TextPointerContext.ElementEnd:
+                        if (navigator.GetAdjacentElement(LogicalDirection.Forward) is Paragraph)
+                            cnt += 2;
+                        break;
+                    case TextPointerContext.EmbeddedElement:
+                        // TODO: Find out what to do here?
+                        cnt++;
+                        break;
+                    case TextPointerContext.Text:
+                        int runLength = navigator.GetTextRunLength(LogicalDirection.Forward);
+
+                        if (runLength > 0 && runLength + cnt < offset)
+                        {
+                            cnt += runLength;
+                            navigator = navigator.GetPositionAtOffset(runLength);
+                            if (cnt > offset)
+                                break;
+                            continue;
+                        }
+                        cnt++;
+                        break;
+                }
+
+                if (cnt > offset)
+                    break;
+
+                navigator = navigator.GetPositionAtOffset(1, LogicalDirection.Forward);
+
+            } // End while.
+
+            return navigator;
         }
         #endregion
 

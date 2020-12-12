@@ -1,30 +1,28 @@
-﻿<Window x:Class="TextEditorView.View.TextProccessorOutput"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:TextEditorView.View"
-        mc:Ignorable="d"
-        Title="TextProccessorOutput" Height="500" Width="300">
-    <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <Grid x:Name="Controls" Grid.Row="0">
+﻿<UserControl x:Class="TextEditorView.View.ProccessorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TextEditorView.View"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid x:Name="Controls" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0">
+            <StackPanel Grid.Row="1" Grid.Column="0">
                 <TextBox  materialDesign:HintAssist.Hint="Find in text below"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  />
                 <Button Content="Find "/>
             </StackPanel>
 
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="0" Grid.Column="0">
                 <RadioButton GroupName="ChangeInWindow" Content="Change text only in this Window" IsChecked="True"/>
                 <RadioButton GroupName="ChangeInWindow" Content="Change text also in Main Window" />
 
@@ -35,9 +33,5 @@
             </StackPanel>
 
         </Grid>
-
-
-        <RichTextBox x:Name="TextProccessorBox" Grid.Row="1" />
-
-    </Grid>
-</Window>
+        
+</UserControl>

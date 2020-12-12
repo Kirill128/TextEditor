@@ -8,18 +8,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TextEditorView.Model;
 
 namespace TextEditorView.View
 {
     /// <summary>
-    /// Interaction logic for TextProccessorOutput.xaml
+    /// Interaction logic for ProccessorControl.xaml
     /// </summary>
-    public partial class TextProccessorOutput : Window
+    public partial class ProccessorControl : UserControl
     {
-        public FlowDocumentBox ChoosenFlowDocBox { get; set; }
-        public TextProccessorOutput()
+        public RichTextBox SelectedTextBox { get; set; }
+        public ProccessorControl(RichTextBox selectedRtb)
         {
             InitializeComponent();
         }
