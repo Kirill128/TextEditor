@@ -52,7 +52,7 @@ I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ButtonForFlowDoc.g.cs
 I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ButtonForFlowDoc.baml
 C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ButtonForFlowDoc.g.cs
 C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ButtonForFlowDoc.baml
-I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\TextProccessorOutput.g.cs
-I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\TextProccessorOutput.baml
 C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ProccessorControl.g.cs
 C:\Users\Laptop\source\repos\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ProccessorControl.baml
+I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ProccessorControl.g.cs
+I:\TextEditor\TextEditorView\obj\Debug\netcoreapp3.1\View\ProccessorControl.baml

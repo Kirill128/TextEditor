@@ -45,7 +45,7 @@ namespace TextEditorView.View
             for (int i = 122; i > 0; i--) l.Add(i);
             cmbFontSize.ItemsSource = l;
            
-            string[] col = new string[] { "Black", "Green", "Yellow", "Red", "Gray" };
+            string[] col = new string[] { "White","Black", "Green", "Yellow", "Red", "Gray" };
             cmbFontColor.ItemsSource = col;
             cmbFontBackColor.ItemsSource = col;
 

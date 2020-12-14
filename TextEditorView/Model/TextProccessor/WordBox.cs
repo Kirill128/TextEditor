@@ -15,7 +15,7 @@ namespace ParserWithList
             get { return  StartInText+this.Word.Value.Length; }    
         }
         
-
+        public TextRange Range { get; set; }
         public WordBox(Word w)
         {
             this.Count = 1;

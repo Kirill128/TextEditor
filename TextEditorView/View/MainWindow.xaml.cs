@@ -82,12 +82,12 @@ namespace TextEditorView.View
             Grid.SetRow(panelSpecial, 0);
             MainGrid.Children.Add(panelSpecial);
 
-            ProccessorControl proccessorControl = new ProccessorControl(this.Text_Container);
+            ProccessorControl proccessorControl = new ProccessorControl(this.Text_Container,ProccessorViewModel);
             proccessorControl.Visibility = Visibility.Collapsed;
             Grid.SetRow(proccessorControl, 1);
             MainGrid.Children.Add(proccessorControl);
 
-            AllTopControls = new UserControl[] { panelSpecial,proccessorControl };
+            AllTopControls = new UserControl[] { panelSpecial , proccessorControl };
 
             foreach (StackPanel s in AllLeftPanels) {
                 LeftWorkPanel.Children.Add(s);
@@ -240,73 +240,7 @@ namespace TextEditorView.View
 
         #endregion
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        #region panel proccessor text edit handlers
-
-        private void Show_ProccessorWindow(object sender, RoutedEventArgs e) {
-            
-            
-
-        }
        
-        private void Find_Command(object sender, ExecutedRoutedEventArgs e)
-        {
-            
-            LinkedList<WordBox> boxes =TextProccessorViewModel.Find(DocumentsViewModel.SelectedDocumentBox,"PATTERN");
-
-            foreach (WordBox w in boxes) {
-                TextPointer start = GetTextPointerAtOffset(DocumentsViewModel.SelectedDocumentBox.Document,w.StartInText);
-                TextPointer end = GetTextPointerAtOffset(DocumentsViewModel.SelectedDocumentBox.Document, w.EndInText);
-                TextRange word = new TextRange(start, end);
-                word.ApplyPropertyValue(Inline.BackgroundProperty, Brushes.GhostWhite);
-
-            }
-            
-        }
-
-        public static TextPointer GetTextPointerAtOffset(FlowDocument document, int offset)
-        {
-            var navigator = document.ContentStart;
-            int cnt = 0;
-
-            while (navigator.CompareTo(document.ContentEnd) < 0)
-            {
-                switch (navigator.GetPointerContext(LogicalDirection.Forward))
-                {
-                    case TextPointerContext.ElementStart:
-                        break;
-                    case TextPointerContext.ElementEnd:
-                        if (navigator.GetAdjacentElement(LogicalDirection.Forward) is Paragraph)
-                            cnt += 2;
-                        break;
-                    case TextPointerContext.EmbeddedElement:
-                        // TODO: Find out what to do here?
-                        cnt++;
-                        break;
-                    case TextPointerContext.Text:
-                        int runLength = navigator.GetTextRunLength(LogicalDirection.Forward);
-
-                        if (runLength > 0 && runLength + cnt < offset)
-                        {
-                            cnt += runLength;
-                            navigator = navigator.GetPositionAtOffset(runLength);
-                            if (cnt > offset)
-                                break;
-                            continue;
-                        }
-                        cnt++;
-                        break;
-                }
-
-                if (cnt > offset)
-                    break;
-
-                navigator = navigator.GetPositionAtOffset(1, LogicalDirection.Forward);
-
-            } // End while.
-
-            return navigator;
-        }
-        #endregion
 
         #region work with docs list to select doc ,close doc etc.          if doc close make select first in collection     !!НЕЛЬЗЯ ВО VIEWMODEL ПОТОМУ ЧТО ТОГДА ЭТО БУДЕТ ПРИВЯЗКА К ОПРЕДЕЛЁННОМУ VIEW!! 
         private void Button_Doc_SelectChange_EventHandler(object sender) {

@@ -12,7 +12,6 @@
         <CommandBinding Command="ApplicationCommands.Open"   Executed="File_Open_Command"/>
         <CommandBinding Command="ApplicationCommands.Save"   Executed="Save_File_Command"/>
         <CommandBinding Command="ApplicationCommands.SaveAs" Executed="Save_File_As_Command"/>
-        <CommandBinding Command="ApplicationCommands.Find"   Executed="Find_Command"/>
     </Window.CommandBindings>
     <Window.Resources>
         <Style x:Key="OnOffToggleImageStyle" TargetType="ToggleButton" >
@@ -64,11 +63,11 @@
                         </Style>
                     </ListBox.ItemContainerStyle>
                 </ListBox>
-                
+
                 <Border Grid.Row="1" Margin="7" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CornerRadius="20" >
-                <Border.Effect>
-                    <DropShadowEffect BlurRadius="50" Color="LightGray" ShadowDepth="0"/>
-                </Border.Effect>
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="50" Color="LightGray" ShadowDepth="0"/>
+                    </Border.Effect>
 
                     <Grid KeyDown="Shortcut_Key_Events">
                         <Grid.RowDefinitions>
@@ -80,9 +79,7 @@
                     </Grid>
 
                 </Border>
-                
-                
-                
+
             </Grid>
 
             <Grid x:Name="LeftWorkPanel" Grid.Column="0" >

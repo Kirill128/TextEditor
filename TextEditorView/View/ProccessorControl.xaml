@@ -4,34 +4,71 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TextEditorView.View"
-              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="200" d:DesignWidth="800">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Find"   Executed="Find_Command"/>
+        
+    </UserControl.CommandBindings>
+
+    
     <Grid x:Name="Controls" Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid  Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="1" Grid.Column="0">
-                <TextBox  materialDesign:HintAssist.Hint="Find in text below"  Style="{StaticResource MaterialDesignFloatingHintTextBox}"  />
-                <Button Content="Find "/>
+            <StackPanel>
+
+                <WrapPanel Orientation="Horizontal">
+                    <CheckBox Content="Find by text " IsChecked="True" >
+                        <CheckBox.Style>
+                            <Style TargetType="CheckBox">
+                                
+                            </Style> 
+                        </CheckBox.Style>
+                    </CheckBox>
+                    <CheckBox Content="Find by Font Family" IsChecked="False"/>
+                    <CheckBox Content="Find by Font Size " IsChecked="False"/>
+                </WrapPanel>
+                <TextBox Grid.Column="0" x:Name="WordToFind" materialDesign:HintAssist.Hint="Input text to find" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  />
+                <ComboBox />
+                <ComboBox />
             </StackPanel>
 
-            <StackPanel Grid.Row="0" Grid.Column="0">
-                <RadioButton GroupName="ChangeInWindow" Content="Change text only in this Window" IsChecked="True"/>
-                <RadioButton GroupName="ChangeInWindow" Content="Change text also in Main Window" />
-
-                <RadioButton GroupName="ChooseWindowForPanelSpecial" Content="Use bold, italic, ... Main Window" IsChecked="True"/>
-                <RadioButton GroupName="ChooseWindowForPanelSpecial" Content="Use bold, italic, ... this Window" />
-
-                <Button Content="Show lines and count in text(Concordance)"/>
-            </StackPanel>
-
+            <WrapPanel Orientation="Horizontal" Grid.Row="1">
+                
+                <Button Content="Find " Command="ApplicationCommands.Find" />
+                <Button Content="Replace" Command="ApplicationCommands.Replace"/>
+                <Button Content="Undo selection"/>
+                <Button Content="Get in another window"/>
+                
+            </WrapPanel>
+            
+            
+            
+            
         </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            
+            
+        </Grid>    
+
+    </Grid>
         
 </UserControl>
