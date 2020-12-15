@@ -30,19 +30,53 @@
             <StackPanel>
 
                 <WrapPanel Orientation="Horizontal">
-                    <CheckBox Content="Find by text " IsChecked="True" >
-                        <CheckBox.Style>
-                            <Style TargetType="CheckBox">
-                                
-                            </Style> 
-                        </CheckBox.Style>
-                    </CheckBox>
-                    <CheckBox Content="Find by Font Family" IsChecked="False"/>
-                    <CheckBox Content="Find by Font Size " IsChecked="False"/>
+                    <CheckBox x:Name="FindTextCheckbox" Content="Find by text " IsChecked="True" />
+                    <CheckBox x:Name="FindFontFamilyCheckbox"  Content="Find by Font Family" IsChecked="False"/>
+                    <CheckBox x:Name="FindFontSizeChekBox" Content="Find by Font Size " IsChecked="False"/>
                 </WrapPanel>
-                <TextBox Grid.Column="0" x:Name="WordToFind" materialDesign:HintAssist.Hint="Input text to find" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  />
-                <ComboBox />
-                <ComboBox />
+                
+                <TextBox Grid.Column="0" x:Name="WordToFind"  BorderBrush="Black" Margin="5" >
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=WordToFind , Path=IsChecked}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=WordToFind , Path=IsChecked}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <ComboBox>
+                    <ComboBox.Style>
+                        <Style TargetType="ComboBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=FindFontFamilyCheckbox , Path=IsChecked}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=FindFontFamilyCheckbox , Path=IsChecked}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ComboBox.Style>
+                </ComboBox>
+                <ComboBox >
+                    <ComboBox.Style>
+                        <Style TargetType="ComboBox">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=FindFontSizeChekBox , Path=IsChecked}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=FindFontSizeChekBox , Path=IsChecked}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ComboBox.Style>
+                </ComboBox>
             </StackPanel>
 
             <WrapPanel Orientation="Horizontal" Grid.Row="1">
@@ -53,9 +87,6 @@
                 <Button Content="Get in another window"/>
                 
             </WrapPanel>
-            
-            
-            
             
         </Grid>
 

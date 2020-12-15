@@ -44,7 +44,7 @@ namespace TextEditorView.View
         private void Find_Command(object sender, ExecutedRoutedEventArgs e)
         {
             if (String.IsNullOrEmpty(WordToFind.Text)) return;
-
+            
 
 
         }
