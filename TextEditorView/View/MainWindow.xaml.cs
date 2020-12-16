@@ -189,7 +189,7 @@ namespace TextEditorView.View
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    ButtonForFlowDoc but = new ButtonForFlowDoc(e.NewItems[0] as FlowDocumentBox);
+                    ButtonForFlowDoc but = new ButtonForFlowDoc((FlowDocumentBox)e.NewItems[0] );
                     ButtonsFlowDocs.Add(but);
                     but.ButtonFileSelectClick += Button_Doc_SelectChange_EventHandler;           //Binding to select 
                     but.ButtonFileCloseClick += Button_Doc_Close_EventHandler;                  //Binding to close
@@ -202,7 +202,7 @@ namespace TextEditorView.View
         private void Current_Doc_Changed(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName) {
-                case "SelectedDocument":
+                case "SelectedDocumentBox":
                     Text_Container.Document = DocumentsViewModel.SelectedDocumentBox.Document;
                     File_Path_Text.Text = DocumentsViewModel.SelectedDocumentBox.DocumentPathInFileSystem;
                     foreach (ButtonForFlowDoc b in ButtonsFlowDocs) b.ButtonFileName.IsChecked = false;// can't just close particular button because i don't have old value
@@ -244,12 +244,12 @@ namespace TextEditorView.View
 
         #region work with docs list to select doc ,close doc etc.          if doc close make select first in collection     !!НЕЛЬЗЯ ВО VIEWMODEL ПОТОМУ ЧТО ТОГДА ЭТО БУДЕТ ПРИВЯЗКА К ОПРЕДЕЛЁННОМУ VIEW!! 
         private void Button_Doc_SelectChange_EventHandler(object sender) {
-            ButtonForFlowDoc selection = (sender as ButtonForFlowDoc);
+            ButtonForFlowDoc selection = (ButtonForFlowDoc)sender;
             DocumentsViewModel.SelectedDocumentBox = selection.FlowDocBox;
         }
         private void Button_Doc_Close_EventHandler(object sender)/////                  if doc close make select first in collection 
         {
-            DocumentsViewModel.FlowDocumentsBoxes.Remove((sender as ButtonForFlowDoc).FlowDocBox);
+            DocumentsViewModel.FlowDocumentsBoxes.Remove(((ButtonForFlowDoc)sender).FlowDocBox);
             if (DocumentsViewModel.FlowDocumentsBoxes.Count > 0)
                 DocumentsViewModel.SelectedDocumentBox = DocumentsViewModel.FlowDocumentsBoxes[0];
             else

@@ -25,7 +25,7 @@ namespace TextEditorView.ViewModel
             get { return selectedDocumentBox; }
             set {
                 selectedDocumentBox = value;
-                OnPropertyChanged("SelectedDocument");
+                OnPropertyChanged("SelectedDocumentBox");
             }
         }
 

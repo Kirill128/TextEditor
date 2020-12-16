@@ -82,7 +82,7 @@ namespace ParserWithList
 		}
 		public static LinkedList<WordBox> sortWordsByAlphabet(LinkedList<WordBox> words)
 		{
-
+			
 			for (LinkedListNode<WordBox> firstIter = words.First; firstIter.Next != null; firstIter = firstIter.Next)
 			{
 				for (LinkedListNode<WordBox> secondIter = firstIter; secondIter.Next != null; secondIter = secondIter.Next)

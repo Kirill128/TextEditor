@@ -25,12 +25,12 @@ namespace TextEditorView.ViewModel
             } 
         }
 
-        public LinkedList<WordBox> LastFindedWordsBoxes { get; set; }
+        //public LinkedList<WordBox> LastFindedWordsBoxes { get; set; }
 
         public TextProccessorViewModel() { 
             
         }
-        #region Find methods 
+        #region Find and filter  methods 
         public static LinkedList<WordBox> Find(FlowDocument Doc,string patternOfRegex) {
             LinkedList<WordBox> result = new LinkedList<WordBox>();
             Regex reg = new Regex(@patternOfRegex);
@@ -40,9 +40,31 @@ namespace TextEditorView.ViewModel
             }
             return result;
         }
-        public static LinkedList<WordBox> Find(FlowDocument Doc,FontFamily fontFamily)
+        public static LinkedList<WordBox> Find(string fontFamily,FlowDocument Doc)
         {
             LinkedList<WordBox> result = new LinkedList<WordBox>();
+            StringBuilder build = new StringBuilder();
+            TextPointer end = Doc.ContentStart;
+            
+            TextPointer wordStart =null;
+            for (int i = 1; end.GetPositionAtOffset(i) != null; i++)
+            {
+                TextRange range = new TextRange(end.GetPositionAtOffset(i-1), end.GetPositionAtOffset(i));
+                if (fontFamily.Equals(range.GetPropertyValue(Inline.FontFamilyProperty))) {
+                    wordStart = end.GetPositionAtOffset(i-1);
+                }
+                else {
+                    if (wordStart!=null) {
+                        result.AddLast(new WordBox(new Word(new TextRange(wordStart,end).Text),i-1));
+                    }
+                    wordStart = null;
+                
+                }
+                build.Append(range.Text);
+            }
+            MessageBox.Show(build.ToString());
+
+
             return result;
         }
         public static LinkedList<WordBox> Find(FlowDocument Doc,int fontSize)
@@ -51,6 +73,29 @@ namespace TextEditorView.ViewModel
                 LinkedList<WordBox> result = new LinkedList<WordBox>();
                 return result;
 
+        }
+
+        public static LinkedList<WordBox> FilterWordsByRegex(LinkedList<WordBox> database,string pattern) {
+            LinkedList<WordBox> result = new LinkedList<WordBox>();
+            foreach (WordBox w in database) {
+                if (Regex.IsMatch(w.Word.Value,pattern)) {
+                    result.AddLast(w);
+                }
+            }
+            return result;
+        }
+        public static LinkedList<WordBox> FilterWordsByFontFamily(LinkedList<WordBox> database, FontFamily family)
+        {
+            LinkedList<WordBox> result = new LinkedList<WordBox>();
+            foreach (WordBox w in database)
+            {
+                object temp = w.Range.GetPropertyValue(Inline.FontFamilyProperty);
+                if (temp.Equals(family))
+                {
+                    result.AddLast(w);
+                }
+            }
+            return result;
         }
 
         #endregion
