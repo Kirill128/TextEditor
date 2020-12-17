@@ -8,9 +8,9 @@ namespace ParserWithList
 	{
 		public LinkedList<Word> Words { get; set; }
 		public LinkedList<PunctuationSymbol> PunctuationSymbols { get; set; }
-		
+
 		public int NumLine { get; set; }
-		public Line(string txt,int numLine):this(txt) {
+		public Line(string txt, int numLine) : this(txt) {
 			NumLine = numLine;
 		}
 		public Line(string txt) {
@@ -41,7 +41,7 @@ namespace ParserWithList
 		public LinkedList<Word> getUniqeWords() {
 			LinkedList<Word> uniqeWords = new LinkedList<Word>();
 			bool correspond;
-			foreach(Word w in this.Words)
+			foreach (Word w in this.Words)
 			{
 				correspond = true;
 				foreach (Word uniqeWord in uniqeWords)
@@ -52,9 +52,9 @@ namespace ParserWithList
 						break;
 					}
 				}
-				if (correspond )//хотел чтобы сортировало при вставке но очень много надо будет в книге Value собирать 
+				if (correspond)//хотел чтобы сортировало при вставке но очень много надо будет в книге Value собирать 
 					uniqeWords.AddLast(w);
-					
+
 			}
 			return uniqeWords;
 		}
@@ -67,7 +67,7 @@ namespace ParserWithList
 				correspond = true;
 				foreach (WordBox uniqeWordBox in wordBoxes)
 				{
-					if ( w.Value == uniqeWordBox.Word.Value)
+					if (w.Value == uniqeWordBox.Word.Value)
 					{
 						correspond = false;
 						uniqeWordBox.Count++;
@@ -75,14 +75,14 @@ namespace ParserWithList
 					}
 				}
 				if (correspond)//хотел чтобы сортировало при вставке но очень много надо будет в книге Value собирать 
-					wordBoxes.AddLast(new WordBox(NumLine,w));
+					wordBoxes.AddLast(new WordBox(NumLine, w));
 
 			}
 			return wordBoxes;
 		}
 		public static LinkedList<WordBox> sortWordsByAlphabet(LinkedList<WordBox> words)
 		{
-			
+
 			for (LinkedListNode<WordBox> firstIter = words.First; firstIter != null; firstIter = firstIter.Next)
 			{
 				for (LinkedListNode<WordBox> secondIter = firstIter; secondIter != null; secondIter = secondIter.Next)
@@ -97,11 +97,49 @@ namespace ParserWithList
 			}
 			return words;
 		}
+
+		public delegate bool ComparatorForBox(WordBox a, WordBox b);
+
+		public delegate bool Comparator(Word a, Word b);
+		public static LinkedList<WordBox> SortWords(LinkedList<WordBox> words,ComparatorForBox compare) {
+			for (LinkedListNode<WordBox> firstIter = words.First; firstIter != null; firstIter = firstIter.Next)
+			{
+				for (LinkedListNode<WordBox> secondIter = firstIter; secondIter != null; secondIter = secondIter.Next)
+				{
+					if (compare(firstIter.Value,secondIter.Value))
+					{
+						WordBox buf = firstIter.Value;
+						firstIter.Value = secondIter.Value;
+						secondIter.Value = buf;
+					}
+				}
+			}
+			return words;
+		}
+
 		public static LinkedList<Word> sortWordsByAlphabet(LinkedList<Word> words) {
 			
 			for (LinkedListNode<Word> firstIter = words.First;firstIter!=null;firstIter=firstIter.Next) {
 				for (LinkedListNode<Word> secondIter = firstIter; secondIter != null; secondIter = secondIter.Next) {
 					if (String.Compare(firstIter.Value.Value,secondIter.Value.Value)>0) {
+						Word buf = firstIter.Value;
+						firstIter.Value = secondIter.Value;
+						secondIter.Value = buf;
+					}
+				}
+			}
+			return words;
+		}
+
+		public static LinkedList<Word> SortWords(LinkedList<Word> words, Comparator compare)
+		{
+
+			for (LinkedListNode<Word> firstIter = words.First; firstIter != null; firstIter = firstIter.Next)
+			{
+				for (LinkedListNode<Word> secondIter = firstIter; secondIter != null; secondIter = secondIter.Next)
+				{
+					if (compare(firstIter.Value, secondIter.Value))
+					{
 						Word buf = firstIter.Value;
 						firstIter.Value = secondIter.Value;
 						secondIter.Value = buf;

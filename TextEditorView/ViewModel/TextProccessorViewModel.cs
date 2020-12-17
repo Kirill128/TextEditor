@@ -18,20 +18,16 @@ namespace TextEditorView.ViewModel
         //public FlowDocumentBox FlowDocBoxesForProccess { get; set; }
 
         private FlowDocumentBox selectedToProccess;
-        public FlowDocumentBox SelectedToProccess {
+        public FlowDocumentBox SelectedToProccess
+        {
             get { return selectedToProccess; }
-            set {
+            set
+            {
                 selectedToProccess = value;
                 OnPropertyChanged("SelectedToProccess");
-                TextRange range=new TextRange(selectedToProccess.Document.ContentStart, selectedToProccess.Document.ContentEnd);
-                
-            } 
+                TextRange range = new TextRange(selectedToProccess.Document.ContentStart, selectedToProccess.Document.ContentEnd);
+            }
         }
-
-       // public Book CurrentBook { get; set; }
-
-        //public LinkedList<WordBox> LastFindedWordsBoxes { get; set; }
-
         public TextProccessorViewModel() { 
             
         }
@@ -126,7 +122,52 @@ namespace TextEditorView.ViewModel
         }
 
         #endregion
-       
+
+
+        #region Sort,get Unique WOrds,Concordance,Sentenses
+        public static string SortSelected(TextRange allselected)
+        {
+            ParserWithList.Line line = new ParserWithList.Line(allselected.Text);
+            LinkedList<Word> resWords = ParserWithList.Line.SortWords(line.getUniqeWords(), (Word a, Word b) => String.Compare(a.Value, b.Value) > 0);
+            StringBuilder builder = new StringBuilder();
+            foreach (Word w in resWords) builder.Append(w.Value + System.Environment.NewLine);
+            return builder.ToString();
+        }
+        public static string GetUniqueWords(TextRange allselected)
+        {
+            ParserWithList.Line line = new ParserWithList.Line(allselected.Text);
+            LinkedList<Word> resWords = line.getUniqeWords();
+            StringBuilder builder = new StringBuilder();
+            foreach (Word w in resWords) builder.Append(w.Value + System.Environment.NewLine);
+            return builder.ToString();
+        }
+        public static string GetConcordance(TextRange oldrange)
+        {
+            StringBuilder build = new StringBuilder();
+            Book CurrentBook = new Book(oldrange.Text);
+            LinkedList<WordBox> b = ParserWithList.Line.sortWordsByAlphabet(CurrentBook.Pages.First.Value.getUniqueWordsBoxes());
+            foreach (WordBox w in b)
+            {
+                build.Append(w.Word.Value + " " + w.Count + ": ");
+                foreach (int i in w.MeetInLines)
+                {
+                    build.Append(i + " ");
+                }
+                build.Append(System.Environment.NewLine);
+            }
+            return build.ToString();
+        }
+        public static string GetSentenses(TextRange oldrange) 
+        {
+            StringBuilder build = new StringBuilder();
+            Text text = new Text(oldrange.Text);
+            foreach (Sentens s in text.Sentenses)
+            {
+                build.Append(s.Value + System.Environment.NewLine);
+            }
+            return build.ToString();
+        }
+        #endregion
 
         public static TextPointer GetTextPointerAtOffset(FlowDocument document, int offset)
         {

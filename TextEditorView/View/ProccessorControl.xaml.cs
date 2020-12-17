@@ -40,11 +40,6 @@ namespace TextEditorView.View
 
         #region proccessor text edit handlers
 
-        private void Show_ProccessorWindow(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void Find_Command(object sender, ExecutedRoutedEventArgs e)
         {
             if (String.IsNullOrEmpty(WordToFind.Text)) return;

@@ -244,6 +244,11 @@ namespace TextEditorView.View
             DocumentsViewModel.FileSaveInCollectionAndWindow();
         }
 
+        private void OpenNewFromString(string str) {
+            File_New_Command(null, null);
+            TextRange newrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
+            newrange.Text = str;
+        }
         #endregion
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        
@@ -337,65 +342,26 @@ namespace TextEditorView.View
         #region TextProccessor hanglers to show result in new window
         private void SortSelected(object sender, RoutedEventArgs e)
         {
-            TextRange allselected = Text_Container.Selection;
-            if (String.IsNullOrEmpty(allselected.Text)) return;
-            ParserWithList.Line line = new ParserWithList.Line(allselected.Text);
-            LinkedList<Word> resWords = ParserWithList.Line.sortWordsByAlphabet(line.getUniqeWords());
-            StringBuilder builder = new StringBuilder();
-            foreach (Word w in resWords) builder.Append(w.Value + '\n');
-
-            File_New_Command(null,null);
-            TextRange newrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
-            newrange.Text = builder.ToString();
+            if (String.IsNullOrEmpty(Text_Container.Selection.Text)) return;   
+            OpenNewFromString(TextProccessorViewModel.SortSelected(Text_Container.Selection));
         }
         private void GetUniqueWords(object sender, RoutedEventArgs e)
         {
-            TextRange allselected = Text_Container.Selection;
-            if (String.IsNullOrEmpty(allselected.Text)) return;
-            ParserWithList.Line line = new ParserWithList.Line(allselected.Text);
-            LinkedList<Word> resWords = line.getUniqeWords();
-            StringBuilder builder = new StringBuilder();
-            foreach (Word w in resWords) builder.Append(w.Value + '\n');
-
-            File_New_Command(null, null);
-            TextRange newrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
-            newrange.Text = builder.ToString();
+            if (String.IsNullOrEmpty(Text_Container.Selection.Text)) return;
+            OpenNewFromString(TextProccessorViewModel.GetUniqueWords(Text_Container.Selection));
         }
         private void GetConcordance(object sender, RoutedEventArgs e)
         {
-            TextRange oldrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
-            if (String.IsNullOrEmpty(oldrange.Text) ) return;
-            StringBuilder build =new StringBuilder();
-            Book CurrentBook = new Book(oldrange.Text);
-            LinkedList<WordBox> b = ParserWithList.Line.sortWordsByAlphabet(CurrentBook.Pages.First.Value.getUniqueWordsBoxes());
-            foreach (WordBox w in b)
-            {
-                build.Append(w.Word.Value + " " + w.Count + ": ");
-                foreach (int i in w.MeetInLines)
-                {
-                    build.Append(i + " ");
-                }
-                build.Append(System.Environment.NewLine);
-            }
-            File_New_Command(null, null);
-            TextRange newrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
-            newrange.Text = build.ToString();
+            TextRange selected = Text_Container.Selection;
+            if (String.IsNullOrEmpty(selected.Text)) selected = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
+            OpenNewFromString(TextProccessorViewModel.GetConcordance(selected));
         }
         private void GetSentenses(object sender, RoutedEventArgs e)
         {
-            TextRange oldrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
-            if (String.IsNullOrEmpty(oldrange.Text)) return;
-            StringBuilder build = new StringBuilder();
-            Text text = new Text(oldrange.Text);
-            foreach (Sentens s in text.Sentenses) {
-                build.Append(s.Value + System.Environment.NewLine);    
-            }
-            File_New_Command(null, null);
-            TextRange newrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
-            newrange.Text = build.ToString();
-
+            TextRange selected = Text_Container.Selection;
+            if (String.IsNullOrEmpty(selected.Text)) selected=new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
+            OpenNewFromString(TextProccessorViewModel.GetSentenses(selected));
         }
-
 
         #endregion
     }
