@@ -7,16 +7,24 @@ namespace ParserWithList
 {
     public class Book
     {
-        public string FilePath{get;set;}
-        public int maxLinesInPage{get;set;}
+        public string FilePath { get; set; }
+        public int maxLinesInPage { get; set; }
+
         public LinkedList<Page> Pages;
-        public Book(string filePath,int linesInPage){
-            FilePath=filePath;
-            maxLinesInPage=linesInPage;
-            Pages=divideToPages(readFileByLines(filePath),maxLinesInPage);
+        public Book(string filePath, int linesInPage) {
+            FilePath = filePath;
+            maxLinesInPage = linesInPage;
+            Pages = divideToPages(readFileByLines(filePath), maxLinesInPage);
         }
 
-        
+        public Book(string text) {
+            LinkedList<Line> allLines = new LinkedList<Line>();
+            string[] str = text.Split( System.Environment.NewLine );
+            for (int i=0;i<str.Length;i++) { 
+                allLines.AddLast(new Line(str[i],i+1));
+            }
+            Pages=divideToPages(allLines,str.Length);
+        }
         public static LinkedList<Page> divideToPages(LinkedList<Line> allLines,int maxLinesInPage){
             LinkedList<Page> pages = new LinkedList<Page>();
             LinkedList<Line> linesForOnePage;
@@ -34,6 +42,8 @@ namespace ParserWithList
 
             return pages;
         }
+
+
         public static LinkedList<Line> readFileByLines(string filePath){
             LinkedList<Line> allLines=new LinkedList<Line>();
             try{

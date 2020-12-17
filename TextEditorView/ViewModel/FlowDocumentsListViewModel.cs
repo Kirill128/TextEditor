@@ -60,17 +60,29 @@ namespace TextEditorView.ViewModel
 
             }
         }
-        public void FileSaveInCollectionAndWindow() {
+        public void FileSaveInCollectionAndWindow()
+        {
             FlowDocumentBox doc = FileSystemDialogMethods.SaveFileFlowDoc(SelectedDocumentBox);
             if (!doc.DocumentPathInFileSystem.Equals(String.Empty))
+            {
+                doc.ButtonToManipulateDoc = SelectedDocumentBox.ButtonToManipulateDoc; 
+                string[] name = doc.DocumentPathInFileSystem.Split(new char[] { '\\' });
+                doc.ButtonToManipulateDoc.ButtonFileName.Content= name[name.Length - 1]; ;
                 SelectedDocumentBox = doc;
+            }
         }
         public void FileSaveAsCollectionAndWindow()
         {
             FlowDocumentBox doc = FileSystemDialogMethods.SaveFileAsFlowDoc(SelectedDocumentBox.Document);
             if (!doc.DocumentPathInFileSystem.Equals(String.Empty))
+            {
+                doc.ButtonToManipulateDoc = SelectedDocumentBox.ButtonToManipulateDoc;
+                string[] name = doc.DocumentPathInFileSystem.Split(new char[] { '\\' });
+                doc.ButtonToManipulateDoc.ButtonFileName.Content = name[name.Length - 1]; ;
                 SelectedDocumentBox = doc;
+            }
         }
+        
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;

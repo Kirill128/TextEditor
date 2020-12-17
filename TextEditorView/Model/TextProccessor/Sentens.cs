@@ -25,7 +25,7 @@ namespace ParserWithList
 						val.Append(((PunctuationSymbol)ieP.Current).Value);
 						playP=ieP.MoveNext();
 					}
-					val.Append('/');
+					val.Append(' ');
 					
 				}
 				return val.ToString();
@@ -38,7 +38,7 @@ namespace ParserWithList
 			StringBuilder word = new StringBuilder("");
 			for (int i = 0; i < txt.Length; i++)
 			{
-					if (PunctuationSymbol.IsPunctuationSymbol(txt[i]) || txt[i] == '/')
+					if (PunctuationSymbol.IsPunctuationSymbol(txt[i]) || txt[i] == ' ')
 					{
 						if (word.Length != 0) Words.Add(new Word(word.ToString()));
 						PunctuationSymbols.Add(new PunctuationSymbol(txt[i], Words.Count));

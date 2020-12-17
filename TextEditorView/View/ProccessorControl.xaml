@@ -117,9 +117,30 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
-            
-            
+
+            <StackPanel Grid.Row="0">
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="ButtonSort" Content="Sort Selected" Focusable="False" ToolTip="Select Text To sort"/>
+                    <ComboBox Width="60" Height="25" >
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox"></Style>
+                        </ComboBox.Style>
+                        <Image Source="/View/sort1.png" />
+                        <Image Source="/View/sort2.png" />
+                        <Image Source="/View/length1.png" />
+                        <Image Source="/View/length2.png"  />
+                    </ComboBox>
+                   
+                </StackPanel>
+                
+            </StackPanel>
+
+            <WrapPanel Grid.Row="1">
+                <Button x:Name="ButtonUniqueWords" Content="Get Unique Words" Focusable="False" ToolTip="Select Text To get" />
+                <Button x:Name="ButtonConcordance" Content="Concordance"  Focusable="False" />
+                <Button x:Name="ButtonSentenses" Content="Split to Sentenses"  Focusable="False"/>
+                
+            </WrapPanel>
         </Grid>    
 
     </Grid>

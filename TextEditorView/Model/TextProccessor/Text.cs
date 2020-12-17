@@ -25,7 +25,7 @@ namespace ParserWithList {
 				position = txt.IndexOfAny(new char[] { '.', '!', '?' }, start);
 				if (position >= 0) {
 					string subStr = txt.Substring(start, position - start + 1).Trim();
-					subStr = Regex.Replace(subStr, @"\s+", "/");
+					subStr = Regex.Replace(subStr, @"\s+", " ");
 					if (subStr != " ") Sentenses.Add(new Sentens(subStr));
 					start = position + 1;
 				}

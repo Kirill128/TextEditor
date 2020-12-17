@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -22,48 +23,74 @@ namespace TextEditorView.ViewModel
             set {
                 selectedToProccess = value;
                 OnPropertyChanged("SelectedToProccess");
+                TextRange range=new TextRange(selectedToProccess.Document.ContentStart, selectedToProccess.Document.ContentEnd);
+                
             } 
         }
+
+       // public Book CurrentBook { get; set; }
 
         //public LinkedList<WordBox> LastFindedWordsBoxes { get; set; }
 
         public TextProccessorViewModel() { 
             
         }
-        #region Find and filter  methods 
+
+       
+
+        #region Find,replace,filter  methods 
+        public static void Replace(LinkedList<WordBox> boxes, string ultimateStr)
+        {
+            foreach (WordBox w in boxes) {
+                w.Range.Text = ultimateStr;
+            }
+        }
         public static LinkedList<WordBox> Find(FlowDocument Doc,string patternOfRegex) {
             LinkedList<WordBox> result = new LinkedList<WordBox>();
-            Regex reg = new Regex(@patternOfRegex);
+            Regex reg = new Regex(@patternOfRegex,RegexOptions.IgnoreCase);
             MatchCollection matches = reg.Matches(new TextRange(Doc.ContentStart, Doc.ContentEnd).Text);
             foreach (Match m in matches) {
-                result.AddLast(new WordBox(new Word(m.Value),m.Index));
+                WordBox word=new WordBox(new Word(m.Value), m.Index);
+                TextPointer start = TextProccessorViewModel.GetTextPointerAtOffset(Doc, word.StartInText);
+                TextPointer end = TextProccessorViewModel.GetTextPointerAtOffset(Doc, word.EndInText);
+                word.Range = new TextRange(start, end);
+                result.AddLast(word);
             }
             return result;
         }
-        public static LinkedList<WordBox> Find(string fontFamily,FlowDocument Doc)
+        public static LinkedList<WordBox> Find(FlowDocument Doc,FontFamily family)
         {
             LinkedList<WordBox> result = new LinkedList<WordBox>();
             StringBuilder build = new StringBuilder();
             TextPointer end = Doc.ContentStart;
-            
             TextPointer wordStart =null;
-            for (int i = 1; end.GetPositionAtOffset(i) != null; i++)
+            MessageBox.Show("Start");
+            for (int i = 1,start=0; end.GetPositionAtOffset(i) != null; i++)
             {
                 TextRange range = new TextRange(end.GetPositionAtOffset(i-1), end.GetPositionAtOffset(i));
-                if (fontFamily.Equals(range.GetPropertyValue(Inline.FontFamilyProperty))) {
-                    wordStart = end.GetPositionAtOffset(i-1);
+                if (family.Equals(range.GetPropertyValue(Inline.FontFamilyProperty))) {
+                    if (wordStart==null) { 
+                        wordStart = end.GetPositionAtOffset(i - 1);
+                        start = i - 1;
+                    }   
                 }
                 else {
-                    if (wordStart!=null) {
-                        result.AddLast(new WordBox(new Word(new TextRange(wordStart,end).Text),i-1));
+                    if (wordStart != null) {
+                        TextRange rng = new TextRange(wordStart, end);
+                        WordBox box = new WordBox(new Word(rng.Text), start);
+                        result.AddLast(box);
+                        box.Range = rng;
                     }
                     wordStart = null;
-                
+                    start = 0;
                 }
-                build.Append(range.Text);
+                
+            }
+
+            foreach (WordBox w in result) {
+                build.Append(w.Word.Value);
             }
             MessageBox.Show(build.ToString());
-
 
             return result;
         }
@@ -99,6 +126,7 @@ namespace TextEditorView.ViewModel
         }
 
         #endregion
+       
 
         public static TextPointer GetTextPointerAtOffset(FlowDocument document, int offset)
         {
@@ -116,7 +144,6 @@ namespace TextEditorView.ViewModel
                             cnt += 2;
                         break;
                     case TextPointerContext.EmbeddedElement:
-                        // TODO: Find out what to do here?
                         cnt++;
                         break;
                     case TextPointerContext.Text:

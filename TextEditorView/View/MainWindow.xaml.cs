@@ -32,7 +32,7 @@ namespace TextEditorView.View
     public partial class MainWindow : Window
     {
 
-        //////////////////////////////////// Inizialisation Data //////////////////////////////////////////////////////////// 
+        //////////////////////////////////// Inizialisation View Data //////////////////////////////////////////////////////////// 
         #region
         private ToggleButton[] LeftPanelButtons;// left button with icons 
         /*
@@ -68,6 +68,7 @@ namespace TextEditorView.View
         public TextProccessorViewModel ProccessorViewModel { get; set; }
         
 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -75,7 +76,7 @@ namespace TextEditorView.View
             LeftPanelButtons = new ToggleButton[] { Button_Folder, Button_Settings };
             TopPanelButtons = new ToggleButton[] { Button_Special , Button_Proccessor};
 
-            AllLeftPanels = new StackPanel[] { MakePanelButtonsOpenFileSystem(), MakePanelButtonsSettings() };
+            AllLeftPanels = new StackPanel[] { MakePanelButtonsOpenFileSystem(), MakePanelButtonsSettings() };// 
 
             PanelSpecial panelSpecial = new PanelSpecial(this.Text_Container);
             panelSpecial.Visibility = Visibility.Collapsed;
@@ -103,7 +104,12 @@ namespace TextEditorView.View
             ProccessorViewModel = new TextProccessorViewModel();
 
             this.DataContext = DocumentsViewModel;
-
+            // Binding event from ProccessorControl (View) to handlers to show result in new flowdoc in current window //
+            proccessorControl.ButtonUniqueWords.Click+=GetUniqueWords;
+            proccessorControl.ButtonConcordance.Click += GetConcordance;
+            proccessorControl.ButtonSentenses.Click += GetSentenses;
+            proccessorControl.ButtonSort.Click += SortSelected;
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////
             File_New_Command(null, null);
             
         }
@@ -266,6 +272,7 @@ namespace TextEditorView.View
         }
 
 
+
         #region left icons toggle buttons handlers
         private void Button_Folder_Click(object sender, RoutedEventArgs e) {
             HideLeftButtonsAndShowOneLeftPanel(sender, 0, 0);
@@ -327,7 +334,70 @@ namespace TextEditorView.View
         }
         #endregion
 
+        #region TextProccessor hanglers to show result in new window
+        private void SortSelected(object sender, RoutedEventArgs e)
+        {
+            TextRange allselected = Text_Container.Selection;
+            if (String.IsNullOrEmpty(allselected.Text)) return;
+            ParserWithList.Line line = new ParserWithList.Line(allselected.Text);
+            LinkedList<Word> resWords = ParserWithList.Line.sortWordsByAlphabet(line.getUniqeWords());
+            StringBuilder builder = new StringBuilder();
+            foreach (Word w in resWords) builder.Append(w.Value + '\n');
 
+            File_New_Command(null,null);
+            TextRange newrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
+            newrange.Text = builder.ToString();
+        }
+        private void GetUniqueWords(object sender, RoutedEventArgs e)
+        {
+            TextRange allselected = Text_Container.Selection;
+            if (String.IsNullOrEmpty(allselected.Text)) return;
+            ParserWithList.Line line = new ParserWithList.Line(allselected.Text);
+            LinkedList<Word> resWords = line.getUniqeWords();
+            StringBuilder builder = new StringBuilder();
+            foreach (Word w in resWords) builder.Append(w.Value + '\n');
+
+            File_New_Command(null, null);
+            TextRange newrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
+            newrange.Text = builder.ToString();
+        }
+        private void GetConcordance(object sender, RoutedEventArgs e)
+        {
+            TextRange oldrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
+            if (String.IsNullOrEmpty(oldrange.Text) ) return;
+            StringBuilder build =new StringBuilder();
+            Book CurrentBook = new Book(oldrange.Text);
+            LinkedList<WordBox> b = ParserWithList.Line.sortWordsByAlphabet(CurrentBook.Pages.First.Value.getUniqueWordsBoxes());
+            foreach (WordBox w in b)
+            {
+                build.Append(w.Word.Value + " " + w.Count + ": ");
+                foreach (int i in w.MeetInLines)
+                {
+                    build.Append(i + " ");
+                }
+                build.Append(System.Environment.NewLine);
+            }
+            File_New_Command(null, null);
+            TextRange newrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
+            newrange.Text = build.ToString();
+        }
+        private void GetSentenses(object sender, RoutedEventArgs e)
+        {
+            TextRange oldrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
+            if (String.IsNullOrEmpty(oldrange.Text)) return;
+            StringBuilder build = new StringBuilder();
+            Text text = new Text(oldrange.Text);
+            foreach (Sentens s in text.Sentenses) {
+                build.Append(s.Value + System.Environment.NewLine);    
+            }
+            File_New_Command(null, null);
+            TextRange newrange = new TextRange(Text_Container.Document.ContentStart, Text_Container.Document.ContentEnd);
+            newrange.Text = build.ToString();
+
+        }
+
+
+        #endregion
     }
 
 

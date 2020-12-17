@@ -75,7 +75,7 @@ namespace ParserWithList
 					}
 				}
 				if (correspond)//хотел чтобы сортировало при вставке но очень много надо будет в книге Value собирать 
-					wordBoxes.AddLast(new WordBox(w, NumLine));
+					wordBoxes.AddLast(new WordBox(NumLine,w));
 
 			}
 			return wordBoxes;
@@ -83,9 +83,9 @@ namespace ParserWithList
 		public static LinkedList<WordBox> sortWordsByAlphabet(LinkedList<WordBox> words)
 		{
 			
-			for (LinkedListNode<WordBox> firstIter = words.First; firstIter.Next != null; firstIter = firstIter.Next)
+			for (LinkedListNode<WordBox> firstIter = words.First; firstIter != null; firstIter = firstIter.Next)
 			{
-				for (LinkedListNode<WordBox> secondIter = firstIter; secondIter.Next != null; secondIter = secondIter.Next)
+				for (LinkedListNode<WordBox> secondIter = firstIter; secondIter != null; secondIter = secondIter.Next)
 				{
 					if (String.Compare(firstIter.Value.Word.Value, secondIter.Value.Word.Value) > 0)
 					{
@@ -99,8 +99,8 @@ namespace ParserWithList
 		}
 		public static LinkedList<Word> sortWordsByAlphabet(LinkedList<Word> words) {
 			
-			for (LinkedListNode<Word> firstIter = words.First;firstIter.Next!=null;firstIter=firstIter.Next) {
-				for (LinkedListNode<Word> secondIter = firstIter; secondIter.Next != null; secondIter = secondIter.Next) {
+			for (LinkedListNode<Word> firstIter = words.First;firstIter!=null;firstIter=firstIter.Next) {
+				for (LinkedListNode<Word> secondIter = firstIter; secondIter != null; secondIter = secondIter.Next) {
 					if (String.Compare(firstIter.Value.Value,secondIter.Value.Value)>0) {
 						Word buf = firstIter.Value;
 						firstIter.Value = secondIter.Value;
