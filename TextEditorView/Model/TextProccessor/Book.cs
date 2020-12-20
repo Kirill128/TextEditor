@@ -19,11 +19,11 @@ namespace ParserWithList
 
         public Book(string text) {
             LinkedList<Line> allLines = new LinkedList<Line>();
-            string[] str = text.Split( System.Environment.NewLine );
+            string[] str = text.Split( System.Environment.NewLine,StringSplitOptions.RemoveEmptyEntries );
             for (int i=0;i<str.Length;i++) { 
                 allLines.AddLast(new Line(str[i],i+1));
             }
-            Pages=divideToPages(allLines,str.Length);
+            Pages=divideToPages(allLines,str.Length);//////////////////////////////////// deafult can be 1 page
         }
         public static LinkedList<Page> divideToPages(LinkedList<Line> allLines,int maxLinesInPage){
             LinkedList<Page> pages = new LinkedList<Page>();

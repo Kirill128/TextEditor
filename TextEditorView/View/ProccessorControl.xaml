@@ -31,8 +31,8 @@
 
                 <WrapPanel Orientation="Horizontal">
                     <CheckBox x:Name="FindTextCheckbox" Content="Find by text " IsChecked="True" />
-                    <CheckBox x:Name="FindFontFamilyCheckbox"  Content="Find by Font Family" IsChecked="False"/>
-                    <CheckBox x:Name="FindFontSizeChekBox" Content="Find by Font Size " IsChecked="False"/>
+                    <CheckBox x:Name="FindFontFamilyCheckbox"  Content="Find by Font Family" IsChecked="False" Visibility="Collapsed"/>
+                    <CheckBox x:Name="FindFontSizeChekBox" Content="Find by Font Size " IsChecked="False" Visibility="Collapsed"/>
                 </WrapPanel>
 
                 <Grid >
@@ -106,8 +106,6 @@
             <WrapPanel Orientation="Horizontal" Grid.Row="1">
                 <Button Content="Find " Command="ApplicationCommands.Find" />
                 <Button Content="Replace" Command="ApplicationCommands.Replace"/>
-                <Button Content="Undo selection" />
-                <Button Content="Find and Get in another window" Click="Show_ProccessorWindow"/>
             </WrapPanel>
             
         </Grid>
@@ -121,14 +119,14 @@
             <StackPanel Grid.Row="0">
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="ButtonSort" Content="Sort Selected" Focusable="False" ToolTip="Select Text To sort"/>
-                    <ComboBox Width="60" Height="25" >
+                    <ComboBox x:Name="cmbSort" Width="60" Height="25" SelectedIndex="0">
                         <ComboBox.Style>
                             <Style TargetType="ComboBox"></Style>
                         </ComboBox.Style>
-                        <Image Source="/View/sort1.png" />
-                        <Image Source="/View/sort2.png" />
-                        <Image Source="/View/length1.png" />
-                        <Image Source="/View/length2.png"  />
+                        <Image Source="/View/sort1.png"   ToolTip="By Alphabet A-Z"/>
+                        <Image Source="/View/sort2.png"   ToolTip="By Alphabet Z-A"/>
+                        <Image Source="/View/length1.png" ToolTip="By Length 1-100"/>
+                        <Image Source="/View/length2.png" ToolTip="By Length 100-1"/>
                     </ComboBox>
                    
                 </StackPanel>

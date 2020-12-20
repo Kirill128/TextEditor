@@ -98,8 +98,8 @@
 
                     <ToggleButton x:Name="Button_Folder"     Style="{StaticResource OnOffToggleImageStyle}" Content="{StaticResource FolderImg}"   Grid.Column="0" Grid.Row="0"  VerticalAlignment="Top" IsChecked="False" Click="Button_Folder_Click" />
                     <ToggleButton x:Name="Button_Special"    Style="{StaticResource OnOffToggleImageStyle}" Content="{StaticResource SpecialImg}"  Grid.Column="0" Grid.Row="1"  VerticalAlignment="Top" IsChecked="False" Click="Button_Special_Click" />
-                    <ToggleButton x:Name="Button_Settings"   Style="{StaticResource OnOffToggleImageStyle}" Content="{StaticResource SettImg}"     Grid.Column="0" Grid.Row="2"  VerticalAlignment="Top" IsChecked="False" Click="Button_Settings_Click"/>
-                    <ToggleButton x:Name="Button_Proccessor" Style="{StaticResource OnOffToggleImageStyle}" Content="{StaticResource Proccessor}"     Grid.Column="0" Grid.Row="3"  VerticalAlignment="Top" IsChecked="False" Click="Button_Proccessor_Click"/>
+                   
+                    <ToggleButton x:Name="Button_Proccessor" Style="{StaticResource OnOffToggleImageStyle}" Content="{StaticResource Proccessor}"     Grid.Column="0" Grid.Row="2"  VerticalAlignment="Top" IsChecked="False" Click="Button_Proccessor_Click"/>
                 </Grid>
 
 

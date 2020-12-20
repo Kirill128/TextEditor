@@ -125,12 +125,13 @@ namespace TextEditorView.ViewModel
 
 
         #region Sort,get Unique WOrds,Concordance,Sentenses
-        public static string SortSelected(TextRange allselected)
+        public static string SortSelected(TextRange allselected,ParserWithList.Line.ComparatorForBox comparator)
         {
-            ParserWithList.Line line = new ParserWithList.Line(allselected.Text);
-            LinkedList<Word> resWords = ParserWithList.Line.SortWords(line.getUniqeWords(), (Word a, Word b) => String.Compare(a.Value, b.Value) > 0);
+            Book CurrentBook = new Book(allselected.Text);
+            LinkedList<WordBox> resWords;
+            resWords = ParserWithList.Line.SortWords(CurrentBook.Pages.First.Value.getUniqueWordsBoxes(),comparator);
             StringBuilder builder = new StringBuilder();
-            foreach (Word w in resWords) builder.Append(w.Value + System.Environment.NewLine);
+            foreach (WordBox w in resWords) builder.Append(w.Word.Value + System.Environment.NewLine);
             return builder.ToString();
         }
         public static string GetUniqueWords(TextRange allselected)

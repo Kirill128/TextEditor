@@ -49,7 +49,7 @@ namespace TextEditorView.View
         private StackPanel[] AllLeftPanels; //left  panels for left buttons with icons
         /*
          * 0 - Panel for Button Folder
-         * 1 - Panel for Button Settings
+         * 
          */
 
         private UserControl[] AllTopControls; // top control to work with text in Text_Container
@@ -73,10 +73,10 @@ namespace TextEditorView.View
         {
             InitializeComponent();
 
-            LeftPanelButtons = new ToggleButton[] { Button_Folder, Button_Settings };
+            LeftPanelButtons = new ToggleButton[] { Button_Folder };
             TopPanelButtons = new ToggleButton[] { Button_Special , Button_Proccessor};
 
-            AllLeftPanels = new StackPanel[] { MakePanelButtonsOpenFileSystem(), MakePanelButtonsSettings() };// 
+            AllLeftPanels = new StackPanel[] { MakePanelButtonsOpenFileSystem() };// 
 
             PanelSpecial panelSpecial = new PanelSpecial(this.Text_Container);
             panelSpecial.Visibility = Visibility.Collapsed;
@@ -160,7 +160,8 @@ namespace TextEditorView.View
                           <Button Content="Save File"     Command="ApplicationCommands.Save"   Background="#fadadada" Foreground="Black"/>
                           <Button Content="Save File As"  Command="ApplicationCommands.SaveAs" Background="#fadadada" Foreground="Black"/>
                       </StackPanel>
-         */
+
+         <ToggleButton x:Name="Button_Settings"   Style="{StaticResource OnOffToggleImageStyle}" Content="{StaticResource SettImg}"     Grid.Column="0" Grid.Row="2"  VerticalAlignment="Top" IsChecked="False" Click="Button_Settings_Click"/>
         public static StackPanel MakePanelButtonsSettings() {
             Button theme = new Button();
             theme.Content = "Theme";
@@ -186,7 +187,7 @@ namespace TextEditorView.View
 
             return panel;
         }
-
+        */
         #endregion
         // /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -282,11 +283,11 @@ namespace TextEditorView.View
         private void Button_Folder_Click(object sender, RoutedEventArgs e) {
             HideLeftButtonsAndShowOneLeftPanel(sender, 0, 0);
         }
-        private void Button_Settings_Click(object sender, RoutedEventArgs e)
+       /* private void Button_Settings_Click(object sender, RoutedEventArgs e)
         {
             HideLeftButtonsAndShowOneLeftPanel(sender, 1, 1);
         }
-       
+       */
         private void HideLeftButtonsAndShowOneLeftPanel(object sender, int numOfLeftPanel, int numOfLeftButton ) {
             ToggleButton buttonFolder = (ToggleButton)sender;
             if ((bool)buttonFolder.IsChecked)
@@ -342,8 +343,23 @@ namespace TextEditorView.View
         #region TextProccessor hanglers to show result in new window
         private void SortSelected(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrEmpty(Text_Container.Selection.Text)) return;   
-            OpenNewFromString(TextProccessorViewModel.SortSelected(Text_Container.Selection));
+            if (String.IsNullOrEmpty(Text_Container.Selection.Text)) return;
+            string result=String.Empty;
+            switch (((ProccessorControl)AllTopControls[1]).cmbSort.SelectedIndex) {
+                case 0:
+                    result=TextProccessorViewModel.SortSelected(Text_Container.Selection, (WordBox a, WordBox b) => String.Compare(a.Word.Value, b.Word.Value) > 0);
+                    break;
+                case 1:
+                    result=TextProccessorViewModel.SortSelected(Text_Container.Selection, (WordBox a, WordBox b) => String.Compare(a.Word.Value, b.Word.Value) < 0);
+                    break;
+                case 2:
+                    result=TextProccessorViewModel.SortSelected(Text_Container.Selection, (WordBox a, WordBox b) => a.Word.Length > b.Word.Length);
+                    break;
+                case 3  :
+                    result=TextProccessorViewModel.SortSelected(Text_Container.Selection, (WordBox a, WordBox b) => a.Word.Length < b.Word.Length);
+                    break;
+            }
+            OpenNewFromString(result);
         }
         private void GetUniqueWords(object sender, RoutedEventArgs e)
         {

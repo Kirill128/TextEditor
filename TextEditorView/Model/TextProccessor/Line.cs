@@ -97,6 +97,23 @@ namespace ParserWithList
 			}
 			return words;
 		}
+		public static LinkedList<Word> sortWordsByAlphabet(LinkedList<Word> words)
+		{
+
+			for (LinkedListNode<Word> firstIter = words.First; firstIter != null; firstIter = firstIter.Next)
+			{
+				for (LinkedListNode<Word> secondIter = firstIter; secondIter != null; secondIter = secondIter.Next)
+				{
+					if (String.Compare(firstIter.Value.Value, secondIter.Value.Value) > 0)
+					{
+						Word buf = firstIter.Value;
+						firstIter.Value = secondIter.Value;
+						secondIter.Value = buf;
+					}
+				}
+			}
+			return words;
+		}
 
 		public delegate bool ComparatorForBox(WordBox a, WordBox b);
 
@@ -109,20 +126,6 @@ namespace ParserWithList
 					if (compare(firstIter.Value,secondIter.Value))
 					{
 						WordBox buf = firstIter.Value;
-						firstIter.Value = secondIter.Value;
-						secondIter.Value = buf;
-					}
-				}
-			}
-			return words;
-		}
-
-		public static LinkedList<Word> sortWordsByAlphabet(LinkedList<Word> words) {
-			
-			for (LinkedListNode<Word> firstIter = words.First;firstIter!=null;firstIter=firstIter.Next) {
-				for (LinkedListNode<Word> secondIter = firstIter; secondIter != null; secondIter = secondIter.Next) {
-					if (String.Compare(firstIter.Value.Value,secondIter.Value.Value)>0) {
-						Word buf = firstIter.Value;
 						firstIter.Value = secondIter.Value;
 						secondIter.Value = buf;
 					}
